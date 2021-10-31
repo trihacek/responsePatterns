@@ -1,0 +1,7 @@
+.Rproj.user
+_archive
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+responsePatterns.Rproj
