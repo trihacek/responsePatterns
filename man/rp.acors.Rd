@@ -10,6 +10,7 @@ rp.acors(
   id.var = NULL,
   na.rm = FALSE,
   cor.method = c("pearson", "spearman", "kendall"),
+  percentile.method = c("max", "sum"),
   store.data = TRUE
 )
 }
