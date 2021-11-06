@@ -1,11 +1,25 @@
+#' Extract indices from a ResponsePatterns object
+#'
+#' This function extracts indices from a ResponsePatterns object.
+#'
+#' @param rp.object A ResponsePatterns object.
+#' @param round An integer. The number of decimal places to which the indices should be rounded.
+#' @param include.coefs A logical scalar. Should the returned data set contain also all coefficients?
+#'
+#' @return Returns a data frame.
+#' @export
+#'
+#' @examples
+#' rp <- rp.acors(rp.simdata, id.var="optional_ID")
+#' rp.indices(rp)
 rp.indices <- function(rp.object,
                        round=2,
                        include.coefs=TRUE
 ) {
 
   #Check rp.object
-  if(!is(rp.object,"responsePatterns"))
-    stop("The object is not of class responsePatterns")
+  if(!is(rp.object,"ResponsePatterns"))
+    stop("The object is not of class ResponsePatterns")
 
   indices <- round(rp.object@indices,round)
   if(include.coefs==TRUE)

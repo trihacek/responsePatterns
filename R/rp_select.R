@@ -1,10 +1,24 @@
+#' Select observations
+#'
+#' This function reorders observations and selects those equal of above a defined percentile.
+#'
+#' @param rp.object A ResponsePatterns object.
+#' @param percentile An integer. Defines a percentile cutoff.
+#'
+#' @return A ResponsePatterns object.
+#' @export
+#'
+#' @examples
+#' rp <- rp.acors(rp.simdata, id.var="optional_ID")
+#' rp <- rp.select(rp, percentile=80)
+#' rp %>% rp.select(percentile=90) %>% rp.indices()
 rp.select <- function(rp.object,
                       percentile=90
 ) {
 
   #Check rp.object
-  if(!is(rp.object,"responsePatterns"))
-    stop("The object is not of class responsePatterns")
+  if(!is(rp.object,"ResponsePatterns"))
+    stop("The object is not of class ResponsePatterns")
   #Check the prop parameter
   percentile <- round(percentile)
   if(percentile < 0 | percentile > 99)

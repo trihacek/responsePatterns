@@ -1,6 +1,27 @@
+#' Repetitive pattern analysis
+#'
+#' This function mechanically searches for repetitive patterns in the data. It searches for patterns of a given length (all values between min.length and max.length) using an iterative algorithm. The patterns are defined based on the data: if a sequence of values occurs more than once within an observation, it is considered a repetition. The algorithm counts the number of repetitions for each pattern length and then weighs this sum by the length of the pattern (longer patterns are assigned higher weight). The total score for each respondent is determined as the sum of these pattern length-specific scores and is standardized to take a value between 0 and 1. It is essential to keep the variables in the order in which they were presented to respondents.
+#'
+#' @param data A data set containing variables to analyze and (optionally) an ID variable.
+#' @param max.length An integer. Define the maximum length of a pattern (cannot be longer than the number of variables/2).
+#' @param min.length An integer. Define the minimum length of a pattern (defaults to 2).
+#' @param id.var A string. If the data set contains an ID variable, specify it's name.
+#' @param na.rm A logical scalar. Should missing values be removed from the computation of auto-correlations?
+#' @param std.patterns A logical scalar. If set to true, patterns are "standardized" by subtracting the minimum value from all elements. As a result, patterns are compared in terms of their relative "shape" (i.e., "1-2-3" and "3-4-5" are considered identical patterns). If set to FALSE, patterns are compared in terms of their original values (i.e., "1-2-3" and "3-4-5" are considered distinct patterns).
+#' @param store.data A logical scalar. Should the data be stored within the object? Set to TRUE if you want to use the rp.plot or rp.save2csv functions.
+#'
+#' @return Returns an S4 object of class "ResponsePatterns".
+#' @export
+#'
+#' @examples
+#' rp.patterns(rp.simdata, id.var="optional_ID")
+#' rp.patterns(rp.simdata, id.var="optional_ID") %>% rp.select(percentile=90) %>% rp.indices()
 rp.patterns <- function(data,
+                        max.length=NULL,
+                        min.length=2,
                         id.var=NULL,
                         na.rm=FALSE,
+                        std.patterns=TRUE,
                         store.data=TRUE
 ) {
 
@@ -25,12 +46,20 @@ rp.patterns <- function(data,
 
   n.vars <- ncol(data)
   n.obs <- nrow(data)
-  min.length <- 2
-  max.length <- floor(ncol(data)/2)
+
+  #Check the max.length parameter
+  if(is.null(max.length) | !is.numeric(max.length))
+    max.length <- floor(ncol(data)/2)
+  if(max.length > floor(ncol(data)/2))
+    max.length <- floor(ncol(data)/2)
+  #Check the min.length parameter
+  if(!is.numeric(min.length) | min.length > max.length)
+    min.length <- max.length
+
   patterns.df <- as.data.frame(matrix(nrow=nrow(data),ncol=max.length-min.length+1))
   indices.df <- as.data.frame(matrix(nrow=nrow(data),ncol=2))
   rownames(patterns.df) <- rownames(indices.df) <- rownames(data)
-  colnames(patterns.df) <- paste0("L",c(2:max.length))
+  colnames(patterns.df) <- paste0("L",c(min.length:max.length))
   patterns.df[,] <- 0
   colnames(indices.df) <- c("score","percentile")
 
@@ -41,13 +70,15 @@ rp.patterns <- function(data,
         #Learn a potential pattern
         pattern <- row[c(start:(start+length-1))]
         #Standardize the pattern
-        pattern <- pattern - min(pattern, na.rm=TRUE)
+        if(std.patterns==TRUE)
+          pattern <- pattern - min(pattern, na.rm=TRUE)
         #Search for the pattern in the remaining part of the row
         for(position in (start+1):(n.vars-length+1)) {
           #Read a sequence
           sequence <- row[c(position:(position+length-1))]
           #Standardize the sequence
-          sequence <- sequence - min(sequence, na.rm=TRUE)
+          if(std.patterns==TRUE)
+            sequence <- sequence - min(sequence, na.rm=TRUE)
           #Compare teh sequence to the pattern
           is.equal <- all(sequence==pattern)
           if(!is.na(is.equal) & is.equal==TRUE)
@@ -74,12 +105,14 @@ rp.patterns <- function(data,
     store <- data
   else
     store <- data.frame()
-  rp <- new("responsePatterns",
+  rp <- methods::new("ResponsePatterns",
             options=list(
               method="patterns",
-              max.lag=max.length,
+              max.length=max.length,
+              min.length=min.length,
               id.var=ifelse(!is.null(id.var),id.var,""),
               na.rm=na.rm,
+              std.patterns=std.patterns,
               cor.method="none"
             ),
             id=id,

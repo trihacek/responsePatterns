@@ -1,18 +1,28 @@
-#' Auto-correlation patterns
+#' Auto-correlation screening
 #'
-#' @param data
-#' @param max.lag
-#' @param id.var
-#' @param na.rm
-#' @param cor.method
-#' @param store.data
+#' Auto-correlations of survey data allow for a probabilistic detection of repetitive patterns. This function calculates auto-correlation coefficients for all lags up to the value defined by the max.lag parameter for each observation (respondent). Subsequently, it assigns a percentile value to each observation (respondent) based either on the highest absolute auto-correlation or the sum of absolute auto-correlations. It is essential to keep the variables in the order in which they were presented to respondents.
 #'
-#' @return
+#' A response pattern yields perfect positive autocorrelation coefficient (r = 1) when the lag is equal to the length of the pattern, provided the pattern itself is uninterrupted over the whole vector of responses. There are two reasons for which the computation of auto-correlation computation can fail, both of which are associated with possible threat to data validity: (1) the pattern is composed of a vector of identical values (e.g., 2,2,2,2,2,2,2). In such cases, a correlation coefficient cannot be computed due to a zero variance but we arbitrarily set the value r = 1 because it meets the definition of a perfectly repetitive pattern; (2) the sequence contains too many missing values. In such cases we set the value to NA. However, in computing the sum of absolute auto-correlation values we treat these values as “r = 1” since they warrant closer inspection.
+#'
+#' Choosing a suitable maximum lag value, i.e. the maximum number of positions for the data to be shifted in autocorrelation analysis, is very important for a reliable screening. Maximum k value translates into the maximum length of a sequence within a repetitive response pattern that can be efficiently detected. Too low maximum k value hinders autocorrelation screening ability to detect longer repetitive response patterns, thus potentially lowering the method’s sensitivity (the ability to correctly detect careless respondents). On the other hand, maximum k value set too high generally lowers reliability, because it makes the instrumental data matrix smaller, and, by calculating higher numbers of autocorrelation coefficients, allows for higher frequency of occasionally strong autocorrelations that would inflate respondent’s final autocorrelation score (determined as the highest absolute autocorrelation coefficient found), thus lowering the method’s specificity (the ability to correctly not detect attentive respondents). If not specified by the used, the max.lag value is set to the number of variables – 3 internally.
+#' @param data A data set containing variables to analyze and (optionally) an ID variable.
+#' @param max.lag An integer. Define the maximum lag for which auto-correlations should be computed (defaults to number of variables - 3).
+#' @param min.lag An integer. Define the minimum lag for which auto-correlations should be computed (defaults to 1).
+#' @param id.var A string. If the data set contains an ID variable, specify it's name.
+#' @param na.rm A logical scalar. Should missing values be removed from the computation of auto-correlations?
+#' @param cor.method A string. Defined the method used to compute auto-correlations (defaults to "pearson").
+#' @param percentile.method A string. Should the percentiles be based on the maximum absolute auto-correlation or on the sum of the absolute values of all auto-correlations (defaults to "max").
+#' @param store.data A logical scalar. Should the data be stored within the object? Set to TRUE if you want to use the rp.plot or rp.save2csv functions.
+#'
+#' @return Returns an S4 object of class "ResponsePatterns".
 #' @export
 #'
 #' @examples
+#' rp.acors(rp.simdata, id.var="optional_ID")
+#' rp.acors(rp.simdata, id.var="optional_ID") %>% rp.select(percentile=90) %>% rp.indices()
 rp.acors <- function(data,
                      max.lag=NULL,
+                     min.lag=1,
                      id.var=NULL,
                      na.rm=FALSE,
                      cor.method=c("pearson","spearman","kendall"),
@@ -48,6 +58,10 @@ rp.acors <- function(data,
   max.lag <- suppressWarnings(as.numeric(max.lag))
   if(is.na(max.lag) | max.lag < 1)
     stop("max.lag must be an integer")
+  #Check the min.lag value
+  min.lag <- suppressWarnings(as.numeric(min.lag))
+  if(is.na(min.lag) | min.lag > max.lag)
+    stop("min.lag must be an integer smaller or equal to max.lag")
   #Check if max.lag too large
   if(ncol(data)-max.lag < min.length) {
     max.lag <- ncol(data)-min.length
@@ -62,14 +76,14 @@ rp.acors <- function(data,
   if(!percentile.method %in% c("max","sum"))
     stop("cor must be one of the following: max, sum")
 
-  acors.df <- as.data.frame(matrix(nrow=nrow(data),ncol=max.lag))
+  acors.df <- as.data.frame(matrix(nrow=nrow(data),ncol=(max.lag-min.lag+1)))
   indices.df <- as.data.frame(matrix(nrow=nrow(data),ncol=5))
   rownames(acors.df) <- rownames(indices.df) <- rownames(data)
-  colnames(acors.df) <- paste0("lag",c(1:max.lag))
+  colnames(acors.df) <- paste0("lag",c(min.lag:max.lag))
   colnames(indices.df) <- c("sum.abs.ac","max.abs.ac","max.ac.lag","n.failed.ac","percentile")
   for(i in 1:nrow(data)) {
     failed <- 0
-    for(lag in 1:max.lag) {
+    for(lag in min.lag:max.lag) {
       row <- unlist(data[i,])
       if(na.rm==TRUE)
         row <- row[!is.na(row)]
@@ -93,10 +107,10 @@ rp.acors <- function(data,
       }
       if(is.na(ac))
         failed <- failed + 1
-      acors.df[i,lag] <- ac
+      acors.df[i,paste0("lag",lag)] <- ac
       indices.df$n.failed.ac[i] <- failed
     }
-    acors <- abs(acors.df[i,c(1:max.lag)])
+    acors <- abs(acors.df[i,paste0("lag",c(min.lag:max.lag))])
     if(sum(is.na(acors)) < length(acors)) {
       indices.df$sum.abs.ac[i] <- sum(acors,na.rm=T) + sum(is.na(acors))
       indices.df$max.abs.ac[i] <- max(acors,na.rm=TRUE)
@@ -118,10 +132,11 @@ rp.acors <- function(data,
     store <- data
   else
     store <- data.frame()
-  rp <- new("responsePatterns",
+  rp <- methods::new("ResponsePatterns",
             options=list(
               method="acors",
               max.lag=max.lag,
+              min.lag=min.lag,
               id.var=ifelse(!is.null(id.var),id.var,""),
               na.rm=na.rm,
               cor.method=cor.method,
@@ -132,7 +147,7 @@ rp.acors <- function(data,
             n.obs=nrow(data),
             n.vars=ncol(data),
             data=store,
-            coefficients=as.data.frame(acors.df[,1:max.lag]),
+            coefficients=as.data.frame(acors.df[,paste0("lag",c(min.lag:max.lag))]),
             indices=indices.df
   )
 

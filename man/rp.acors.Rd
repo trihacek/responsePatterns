@@ -2,11 +2,12 @@
 % Please edit documentation in R/rp_acors.R
 \name{rp.acors}
 \alias{rp.acors}
-\title{Auto-correlation patterns}
+\title{Auto-correlation screening}
 \usage{
 rp.acors(
   data,
   max.lag = NULL,
+  min.lag = 1,
   id.var = NULL,
   na.rm = FALSE,
   cor.method = c("pearson", "spearman", "kendall"),
@@ -15,11 +16,34 @@ rp.acors(
 )
 }
 \arguments{
-\item{store.data}{}
+\item{data}{A data set containing variables to analyze and (optionally) an ID variable.}
+
+\item{max.lag}{An integer. Define the maximum lag for which auto-correlations should be computed (defaults to number of variables - 3).}
+
+\item{min.lag}{An integer. Define the minimum lag for which auto-correlations should be computed (defaults to 1).}
+
+\item{id.var}{A string. If the data set contains an ID variable, specify it's name.}
+
+\item{na.rm}{A logical scalar. Should missing values be removed from the computation of auto-correlations?}
+
+\item{cor.method}{A string. Defined the method used to compute auto-correlations (defaults to "pearson").}
+
+\item{percentile.method}{A string. Should the percentiles be based on the maximum absolute auto-correlation or on the sum of the absolute values of all auto-correlations (defaults to "max").}
+
+\item{store.data}{A logical scalar. Should the data be stored within the object? Set to TRUE if you want to use the rp.plot or rp.save2csv functions.}
 }
 \value{
-
+Returns an S4 object of class "ResponsePatterns".
 }
 \description{
-Auto-correlation patterns
+Auto-correlations of survey data allow for a probabilistic detection of repetitive patterns. This function calculates auto-correlation coefficients for all lags up to the value defined by the max.lag parameter for each observation (respondent). Subsequently, it assigns a percentile value to each observation (respondent) based either on the highest absolute auto-correlation or the sum of absolute auto-correlations. It is essential to keep the variables in the order in which they were presented to respondents.
+}
+\details{
+A response pattern yields perfect positive autocorrelation coefficient (r = 1) when the lag is equal to the length of the pattern, provided the pattern itself is uninterrupted over the whole vector of responses. There are two reasons for which the computation of auto-correlation computation can fail, both of which are associated with possible threat to data validity: (1) the pattern is composed of a vector of identical values (e.g., 2,2,2,2,2,2,2). In such cases, a correlation coefficient cannot be computed due to a zero variance but we arbitrarily set the value r = 1 because it meets the definition of a perfectly repetitive pattern; (2) the sequence contains too many missing values. In such cases we set the value to NA. However, in computing the sum of absolute auto-correlation values we treat these values as “r = 1” since they warrant closer inspection.
+
+Choosing a suitable maximum lag value, i.e. the maximum number of positions for the data to be shifted in autocorrelation analysis, is very important for a reliable screening. Maximum k value translates into the maximum length of a sequence within a repetitive response pattern that can be efficiently detected. Too low maximum k value hinders autocorrelation screening ability to detect longer repetitive response patterns, thus potentially lowering the method’s sensitivity (the ability to correctly detect careless respondents). On the other hand, maximum k value set too high generally lowers reliability, because it makes the instrumental data matrix smaller, and, by calculating higher numbers of autocorrelation coefficients, allows for higher frequency of occasionally strong autocorrelations that would inflate respondent’s final autocorrelation score (determined as the highest absolute autocorrelation coefficient found), thus lowering the method’s specificity (the ability to correctly not detect attentive respondents). If not specified by the used, the max.lag value is set to the number of variables – 3 internally.
+}
+\examples{
+rp.acors(data, id.var="id")
+rp.acors(data) \%>\% rp.select(percentile=90) \%>\% rp.indices()
 }

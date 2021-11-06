@@ -1,6 +1,29 @@
+#' Plot an individual response
+#'
+#' This function plots an individual response for easier visual inspection. The observation can be identified by one of the following methods: observation number (obs), row name (rowname), or value of the ID variable (id, if defined in the rp.object). Only one of these identifiers should be specified. Using this function requires that the data are stored in the ResponsePatterns object.
+#'
+#' @param rp.object A ResponsePatterns object.
+#' @param obs An integer. The number of observation to plot.
+#' @param rowname A string. The row name of the observation to plot.
+#' @param id A string. The value of the ID variable (if defined in the ResponsePatterns object).
+#' @param plot A logical scalar. Should a the data be plotted?
+#' @param text.output A logical scalar. Should a the data be printed to the console?
+#' @param groups A list of vectors. Defines groups of items that should be plotted using the same color.
+#' @param page.breaks A vector. Draws a vertical line after the items (useful if you want to display the pagination of the questionnaire in the plot).
+#' @param bw A logical scalar. Should the plot be printed in black and white?
+#'
+#' @return Plots a graph.
+#' @export
+#'
+#' @examples
+#' rp <- rp.acors(rp.simdata, id.var="optional_ID")
+#' rp.plot(rp, obs=1)
+#' rp.plot(rp, rowname="12", groups=list(c(1:10),c(11:20)))
+#' rp.plot(rp, id="Natalya", page.breaks=c(5,10,15))
 rp.plot <- function(rp.object,
                     obs=NULL,
                     rowname=NULL,
+                    id=NULL,
                     plot=TRUE,
                     text.output=FALSE,
                     groups=NULL,
@@ -9,25 +32,31 @@ rp.plot <- function(rp.object,
 ){
 
   #Check rp.object
-  if(!is(rp.object,"responsePatterns"))
-    stop("The object is not of class responsePatterns")
+  if(!is(rp.object,"ResponsePatterns"))
+    stop("The object is not of class ResponsePatterns")
   if(nrow(rp.object@data)==0 | ncol(rp.object@data)==0)
     stop("Use store.data=TRUE in rp.acors")
   #Resolve obs vs rowname
-  if(is.null(obs) & is.null(rowname))
-    stop("Either obs or rowname must be specified")
-  if(!is.null(obs) & !is.null(rowname))
-    message("Both obs and rowname were specified, rowname was used")
+  if(is.null(obs) & is.null(rowname) & is.null(id))
+    stop("One of the following identifiers must be specified: obs, rowname, id")
+  #if(!is.null(obs) & !is.null(rowname))
+  #  message("Both obs and rowname were specified, rowname was used")
   if(!is.null(obs)){
     obs <- suppressWarnings(as.integer(obs))
     if(is.na(obs))
       stop("obs must be an integer")
   }
-  #If both obs and rowname are specified, rowname if used
+  #If rowname is specified, rowname is used
   if(!is.null(rowname)){
     if(!rowname %in% rownames(rp.object@data))
       stop("rowname not found in data set")
     obs <- which(rownames(rp.object@data)==rowname)
+  }
+  #If id is specified, id is used
+  if(!is.null(id)){
+    if(!id %in% rp.object@id)
+      stop("id not found in data set")
+    obs <- which(rp.object@id==id)
   }
   #Validate obs
   if(obs > rp.object@n.obs)
@@ -68,8 +97,8 @@ rp.plot <- function(rp.object,
   if(plot==TRUE) {
     sub <- ""
     if(rp.object@options$method=="acors") {
-      for(i in 1:rp.object@options$max.lag) {
-        r <- rp.object@coefficients[obs,i]
+      for(lag in rp.object@options$min.lag:rp.object@options$max.lag) {
+        r <- rp.object@coefficients[obs,paste0("lag",lag)]
         if(is.na(r))
           r <- "NA"
         else if(r!=1) {
