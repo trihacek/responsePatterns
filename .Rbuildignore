@@ -1,2 +1,4 @@
 ^responsePatterns\.Rproj$
 ^\.Rproj\.user$
+^_archive$
+^LICENSE\.md$

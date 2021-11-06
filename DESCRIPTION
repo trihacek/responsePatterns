@@ -1,15 +1,19 @@
 Package: responsePatterns
-Title: What the Package Does (One Line, Title Case)
+Title: Searches for Careless Responsing Patterns in the Data
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Tomas",
+           family = "Rihacek",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+           email = "rihacek@fss.muni.cz",
+           comment = c(ORCID = "0000-0001-5893-9289"))
+    person(given = "Jaroslav",
+           family = "Gottfried",
+           role = c("aut"),
+           email = "jaroslav.gottfried@mail.muni.cz",
+           comment = c(ORCID = "0000-0002-6076-1632"))
+Description: Some survey respondents tend to respond carelessly which complicates data analysis. This package provides functions that make it easier to explore resposes and identify those that may be problematic.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
