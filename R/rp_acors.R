@@ -17,9 +17,11 @@
 #' @return Returns an S4 object of class "ResponsePatterns".
 #' @export
 #'
+#' @references Gottfried, J., Jezek, S., & Kralova, M. (2021). *Autocorrelation screening: A potentially efficient method for detecting repetitive response patterns in questionnaire data.* Manuscript submitted for review.
+#' @seealso \code{\link{rp.patterns}}, \code{\link{rp.indices}}, \code{\link{rp.select}}, \code{\link{rp.hist}}, \code{\link{rp.plot}}, \code{\link{rp.save2csv}}
+#'
 #' @examples
-#' rp.acors(rp.simdata, id.var="optional_ID")
-#' rp.acors(rp.simdata, id.var="optional_ID") %>% rp.select(percentile=90) %>% rp.indices()
+#' rp.acors(rp.simdata, max.lag=10, id.var="optional_ID")
 rp.acors <- function(data,
                      max.lag=NULL,
                      min.lag=1,
@@ -96,14 +98,14 @@ rp.acors <- function(data,
         #In case the vector is too short to compute an auto-correlation
         #if(sum(is.na(row1))==length(row1) | sum(is.na(row2))==length(row2))
         #In case variance cannot be computed
-        if(is.na(var(row1)) | is.na(var(row1)))
+        if(is.na(stats::var(row1)) | is.na(stats::var(row1)))
           ac <- NA
         #In case zero variance prevents us from computing an auto-correlation
-        else if(var(row1, na.rm=TRUE)==0 | var(row2, na.rm=TRUE)==0)
+        else if(stats::var(row1, na.rm=TRUE)==0 | stats::var(row2, na.rm=TRUE)==0)
           ac <- 1
         #Compute the auto-correlation
         else
-          ac <- suppressWarnings(cor(row1,row2,method=cor.method,use="pairwise.complete.obs"))
+          ac <- suppressWarnings(stats::cor(row1,row2,method=cor.method,use="pairwise.complete.obs"))
       }
       if(is.na(ac))
         failed <- failed + 1

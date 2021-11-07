@@ -20,5 +20,9 @@ Returns a data frame.
 This function extracts indices from a ResponsePatterns object.
 }
 \examples{
-rp.indices(rp.object)
+rp <- rp.acors(rp.simdata, id.var="optional_ID")
+rp.indices(rp)
+}
+\seealso{
+\code{\link{rp.acors}}, \code{\link{rp.patterns}}
 }

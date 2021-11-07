@@ -8,16 +8,17 @@
 #' @return A ResponsePatterns object.
 #' @export
 #'
+#' @seealso \code{\link{rp.acors}}, \code{\link{rp.patterns}}
+#'
 #' @examples
 #' rp <- rp.acors(rp.simdata, id.var="optional_ID")
 #' rp <- rp.select(rp, percentile=80)
-#' rp %>% rp.select(percentile=90) %>% rp.indices()
 rp.select <- function(rp.object,
                       percentile=90
 ) {
 
   #Check rp.object
-  if(!is(rp.object,"ResponsePatterns"))
+  if(!methods::is(rp.object,"ResponsePatterns"))
     stop("The object is not of class ResponsePatterns")
   #Check the prop parameter
   percentile <- round(percentile)

@@ -11,10 +11,11 @@
 #' @return Creates a PDF file.
 #' @export
 #'
+#' @seealso \code{\link{rp.acors}}, \code{\link{rp.patterns}}, \code{\link{rp.plot}}
+#'
 #' @examples
 #' rp <- rp.acors(rp.simdata, id.var="optional_ID")
 #' rp.plots2pdf(rp)
-#' rp %>% rp.select(percentile=90) %>% rp.plots2pdf()
 rp.plots2pdf <- function(rp.object,
                          file="rp_plots.pdf",
                          groups=NULL,
@@ -23,13 +24,13 @@ rp.plots2pdf <- function(rp.object,
 ) {
 
   #Check rp.object
-  if(!is(rp.object,"ResponsePatterns"))
+  if(!methods::is(rp.object,"ResponsePatterns"))
     stop("The object is not of class ResponsePatterns")
 
-  pdf(file=file)
+  grDevices::pdf(file=file)
   for(i in 1:rp.object@n.obs)
     rp.plot(rp.object, obs=i, plot=TRUE, text.output=FALSE, groups=groups, page.breaks=page.breaks, bw=bw)
-  dev.off()
+  grDevices::dev.off()
 
   message("Plots saved to ",file)
 

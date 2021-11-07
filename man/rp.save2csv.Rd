@@ -30,6 +30,10 @@ Exports a CSV file.
 This functions exports the ResponsePatterns object indices and, optionally, coefficients and data.
 }
 \examples{
-rp.save2csv(rp.object)
-rp.save2csv(rp.object, include.coefs=FALSE, include.data=FALSE)
+rp <- rp.acors(rp.simdata, id.var="optional_ID")
+rp.save2csv(rp)
+rp.save2csv(rp, include.coefs=FALSE, include.data=FALSE)
+}
+\seealso{
+\code{\link{rp.acors}}, \code{\link{rp.patterns}}, \code{\link{rp.indices}}
 }

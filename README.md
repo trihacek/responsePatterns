@@ -6,26 +6,27 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-Some survey respondents tend to respond carelessly which complicates
+Some survey participants tend to respond carelessly which complicates
 data analysis. This package provides functions that make it easier to
-explore resposes and identify those that may be problematic. Two core
+explore responses and identify those that may be problematic. Two core
 functions of this package provide two approaches to the problem of
-careless responses detection: - *rp.acors()* is based on the
-auto-correlation approach that allows for a probabilistic detection of
-repetitive patterns a in survey data. This function calculates
-auto-correlation coefficients for all lags up to the value defined by
-the max.lag parameter for each observation (respondent). Subsequently,
-it assigns a percentile value to each observation (respondent) based
-either on the highest absolute auto-correlation or the sum of absolute
-auto-correlations. - *rp.patterns()* takes a more mechanistic approach.
-It searches for repetitive patterns in the data using an iterative
-algorithm. Patterns are defined based on the data: if a sequence of
-values occurs more than once within an observation, it is considered a
-repetition. The algorithm counts the number of repetitions for each
-pattern length and then weighs this sum by the length of the pattern
-(longer patterns are assigned higher weight). The total score for each
-respondent is determined as the sum of these pattern length-specific
-scores and is standardized to take a value between 0 and 1.
+careless responses detection:  
+- **`rp.acors`** is based on the auto-correlation approach that allows
+for a probabilistic detection of repetitive patterns a in survey data.
+This function calculates auto-correlation coefficients for all lags up
+to the value defined by the max.lag parameter for each observation
+(respondent). Subsequently, it assigns a percentile value to each
+observation (respondent) based either on the highest absolute
+auto-correlation or the sum of absolute auto-correlations.  
+- **`rp.patterns`** takes a more mechanistic approach. It searches for
+repetitive patterns in the data using an iterative algorithm. Patterns
+are defined based on the data: if a sequence of values occurs more than
+once within an observation, it is considered a repetition. The algorithm
+counts the number of repetitions for each pattern length and then weighs
+this sum by the length of the pattern (longer patterns are assigned
+higher weight). The total score for each respondent is determined as the
+sum of these pattern length-specific scores and is standardized to take
+a value between 0 and 1.
 
 Both approaches yield scores that serve as estimates of how problematic
 the observations potentially are. However, no conclusions should be made
@@ -35,73 +36,152 @@ inspection of the responses, the specifics of the instrument used to
 collect the data, familiarity with the whole data set and the context of
 the data collection process.
 
-Both core functions return an S4 oblect of class ResponsePatterns. The
+Both core functions return an S4 object of class ResponsePatterns. The
 package offers several utility functions that allow to inspect to
-results of the analysis more closely: - *summary* provides an overview
-of the object; - *rp.indices* extracts indices and, optionally,
-coefficients, from the object; - *rp.select* reorders observations and
-selects those equal of above a defined percentile; - *rp.save2csv*
-exports indices and, optionally, coefficients and data into a CSV file;
-- *rp.hist* plots a histogram of the main “suspicion” index (see
-documentation for further details); - *rp.plot* plots an individual
-response for easier visual inspection and allows for graphical
-formatting that eases this inspection; - *rp.plots2pdf* exports a
-collection of individual plots into a PDF file.
+results of the analysis more closely:  
+- **`rp.summary`** (or, simply, **`summary`**) provides an overview of
+the object;  
+- **`rp.indices`** extracts indices and, optionally, coefficients, from
+the object;  
+- **`rp.select`** reorders observations and selects those equal of above
+a defined percentile;  
+- **`rp.save2csv`** exports indices and, optionally, coefficients and
+data into a CSV file;  
+- **`rp.hist`** plots a histogram of the main “suspicion” index (see
+documentation for further details);  
+- **`rp.plot`** plots an individual response for easier visual
+inspection and allows for graphical formatting that eases this
+inspection;  
+- **`rp.plots2pdf`** exports a collection of individual plots into a PDF
+file.
 
-The package comes with an N = 100 data set (*rp.simdata*) that contains
-an ID variable (called “optional_ID”) and simulated responses to 20
-items. We use this data set to demonstrate the functionality of the
-package.
+The rationale for response pattern analysis is described in
+
+> Gottfried, J., Jezek, S., & Kralova, M. (2021). *Autocorrelation
+> screening: A potentially efficient method for detecting repetitive
+> response patterns in questionnaire data.* Manuscript submitted for
+> review.
 
 ## Installation
 
-You can install the released version of responsePatterns from
-[CRAN](https://CRAN.R-project.org) with:
+<!--
+You can install the released version of responsePatterns from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("responsePatterns")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
+-->
+
+You can install the development version from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("trihacek/responsePatterns")
 ```
 
-## Example
+## Examples
 
-This is a basic example which shows you how to solve a common problem:
+The package comes with an *N* = 100 data set (**`rp.simdata`**) that
+contains an ID variable (called “optional_ID”) and simulated responses
+to 20 items rated on a Likert-type scale ranging from 1 to 5. We use
+this data set to demonstrate the functionality of the package.
+
+First, create a ResponsePatterns object that contains information about
+the potentially problematic patterns.
 
 ``` r
 library(responsePatterns)
 #> This is responsePatterns 0.0.0.9000. Note: this is BETA software! Please mind that the package may not be stable and report any bugs! For questions and issues, please see github.com/trihacek/responsePatterns.
-## basic example code
+# Use auto-correlation screening to find patterns in the data
+rp1 <- rp.acors(rp.simdata, max.lag = 5, id.var = "optional_ID")
+# Alternatively, use an iterative mechanistic method fo pattern detection
+rp2 <- rp.patterns(rp.simdata, id.var = "optional_ID")
+# The analysis may take some time for longer data sets...
+
+# Display a summary of the analysis
+rp.summary(rp1)
+#> --------------------------
+#> Response Patterns Analysis
+#> --------------------------
+#> 
+#> Method:  acors 
+#> Number of variables:  20 
+#> Number of observations:  100 
+#> Limited to: min.lag=1, max.lag=5
+#> Contains: full data set
+#> Remove missing values:  FALSE 
+#> Correlation method:  pearson 
+#> Average max. auto-correlation:  0.42 
+#> The modal lag of max. auto-correlation:  5 
+#> Average number of failed auto-correlations:  0 
+#> 
+#> Tips
+#>  - Use rp.indices() to extract max. auto-correlations and other indices
+#>  - Use rp.select() to select cases for further exploration based on percentiles
+#>  - Use rp.hist() to plot the distribution of max. auto-correlations
+#>  - Use rp.plot() to plot individual responses for further exploration
+#>  - Use rp.plots2pdf() to print a series of plots into a PDF file
+#>  - Use rp.save2csv() to save results of the analysis into a CSV file
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+Second, select observations above the 90th (or any other) percentile for
+closer examination and extract (or export) the indices.
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+# Select observations above X percentile
+rp.selected <- rp.select(rp1, percentile = 90)
+
+# Extract indices
+indices <- rp.indices(rp1, include.coefs = FALSE)
+head(indices)
+#>   sum.abs.ac max.abs.ac max.ac.lag n.failed.ac percentile
+#> 1       1.14       0.42          3           0         54
+#> 2       0.61       0.27          2           0         19
+#> 3       0.51       0.25          2           0         14
+#> 4       0.87       0.37          3           0         46
+#> 5       0.24       0.08          4           0          1
+#> 6       0.57       0.32          5           0         33
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/master/examples>.
+Or export them into a CVS file for further processing.
 
-You can also embed plots, for example:
+``` r
+#Or export them into a CVS file for further processing
+rp.save2csv(rp1) 
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+#You may also plot a histogram of the "suspicion" score to get an idea of 
+#what your data set looks like overall
+rp.hist(rp1)
+```
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+Third, plot individual responses that warrant closer inspection.
+
+``` r
+#Select the observation (see IMG 1)
+rp.plot(rp.selected, obs=1)
+
+#Optionally, color the items based on their valence (or any other criterion) and 
+#display pagination of the questionnaire (see IMG 2)
+rp.plot(rp.selected, obs=1, groups=list(c(1:10),c(11:20)), page.breaks=c(5,10,15))
+
+#You may also export a collection of plot into a PDF file (utilizing the same 
+#graphical arguments as the single rp.plot function)
+rp.plots2pdf(rp.selected, groups=list(c(1:10),c(11:20)), page.breaks=c(5,10,15))
+```
+
+|       IMG 1 (basic version)        |      IMG 2 (enhanced version)      |
+|:----------------------------------:|:----------------------------------:|
+| ![IMG 1](man\figures\Rplot_01.png) | ![IMG 2](man\figures\Rplot_02.png) |
+
+You may also use pipelines to streamline the process if you like.
+
+``` r
+library(magrittr)
+
+rp1 %>% rp.select(percentile=90) %>% rp.indices()
+
+rp2 %>% rp.select(percentile=80) %>% rp.plots2pdf()
+```

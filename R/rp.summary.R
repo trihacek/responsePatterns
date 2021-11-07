@@ -1,3 +1,14 @@
+#' SUmmary of an ResponsePatterns object
+#'
+#' @param rp.object A ResponsePatterns object.
+#'
+#' @return Prints summary information about a ResponsePatterns object.
+#' @export
+#'
+#' @examples
+#' rp <- rp.acors(rp.simdata, id.var="optional_ID")
+#' rp.summary(rp)
+#' summary(rp)
 rp.summary <- function(rp.object) {
 
   cat("--------------------------\n")

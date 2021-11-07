@@ -30,6 +30,9 @@ Creates a PDF file.
 This function exports individual plots of all observations to a PDF file. Limit the number of observation by rp.select.
 }
 \examples{
-rp.plots2pdf(rp.object)
-rp.object \%>\% rp.select(percentile=90) \%>\% rp.plots2pdf()
+rp <- rp.acors(rp.simdata, id.var="optional_ID")
+rp.plots2pdf(rp)
+}
+\seealso{
+\code{\link{rp.acors}}, \code{\link{rp.patterns}}, \code{\link{rp.plot}}
 }

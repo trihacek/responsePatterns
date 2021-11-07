@@ -1,5 +1,5 @@
 Package: responsePatterns
-Title: Searches for Careless Responsing Patterns in the Data
+Title: Searches for Careless Responding Patterns in the Data
 Version: 0.0.0.9000
 Authors@R: c(
     person(given = "Tomas",
@@ -13,9 +13,17 @@ Authors@R: c(
            email = "jaroslav.gottfried@mail.muni.cz",
            comment = c(ORCID = "0000-0002-6076-1632"))
            )
-Description: Some survey respondents tend to respond carelessly which complicates data analysis. This package provides functions that make it easier to explore resposes and identify those that may be problematic.
+Description: Some survey participants tend to respond carelessly which complicates data analysis. This package provides functions that make it easier to explore resposes and identify those that may be problematic.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Imports: 
+    graphics,
+    grDevices,
+    methods,
+    stats,
+    utils
+Suggests: 
+    magrittr

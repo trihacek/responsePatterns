@@ -1,3 +1,13 @@
+#' An S4 class to represent the results of response patterns analysis.
+#'
+#' @slot id A vector. Contains the ID variable (if declared by the user) or NAs (if not).
+#' @slot n.obs An integer. Number of observations (responses) in the data set.
+#' @slot n.vars An integer. Number of variables (excluding the ID variable, if declared).
+#' @slot options A list. Contains diverse options set by the user.
+#' @slot percentile An integer. If the rp.select() function is used to select a subsample, this keeps the information about the chosen percentile. Defaults to zero.
+#' @slot data A data frame. Stores the data.
+#' @slot coefficients A data frame. Stores the intermediate products of the analysis.
+#' @slot indices A data frame. Stores the final products of the analysis.
 ResponsePatterns <- setClass("ResponsePatterns", slots=c(
   id="vector",
   n.obs="numeric",

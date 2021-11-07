@@ -33,9 +33,11 @@ rp.patterns(
 Returns an S4 object of class "ResponsePatterns".
 }
 \description{
-This function mechanically searches for repetitive patterns in the data. It searches for patterns of a given length (all values between min.length and max.length) using an iterative algorithm. The patterns are defined based on the data: if a sequence of values occurs more than once within an observation, it is considered a repetition. The algorithm counts the number of repetitions for each pattern length then and weighs this sum by the length of the pattern (longer patterns are assigned higher weight). The total score for each respondent is determined as the sum of these pattern length-specific scores and is standardized to take a value between 0 and 1. It is essential to keep the variables in the order in which they were presented to respondents.
+This function mechanically searches for repetitive patterns in the data. It searches for patterns of a given length (all values between min.length and max.length) using an iterative algorithm. The patterns are defined based on the data: if a sequence of values occurs more than once within an observation, it is considered a repetition. The algorithm counts the number of repetitions for each pattern length and then weighs this sum by the length of the pattern (longer patterns are assigned higher weight). The total score for each respondent is determined as the sum of these pattern length-specific scores and is standardized to take a value between 0 and 1. It is essential to keep the variables in the order in which they were presented to respondents.
 }
 \examples{
-rp.patterns(data, id.var="id")
-rp.patterns(data) \%>\% rp.select(percentile=90) \%>\% rp.indices()
+rp.patterns(rp.simdata, id.var="optional_ID")
+}
+\seealso{
+\code{\link{rp.acors}}, \code{\link{rp.indices}}, \code{\link{rp.select}}, \code{\link{rp.hist}}, \code{\link{rp.plot}}, \code{\link{rp.save2csv}}
 }

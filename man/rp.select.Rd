@@ -18,6 +18,9 @@ A ResponsePatterns object.
 This function reorders observations and selects those equal of above a defined percentile.
 }
 \examples{
-rp.object <- rp.select(rp.object, percentile=80)
-rp.acors(data) \%>\% rp.select(percentile=90) \%>\% rp.indices()
+rp <- rp.acors(rp.simdata, id.var="optional_ID")
+rp <- rp.select(rp, percentile=80)
+}
+\seealso{
+\code{\link{rp.acors}}, \code{\link{rp.patterns}}
 }

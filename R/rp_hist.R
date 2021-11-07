@@ -7,13 +7,15 @@
 #' @return Returns a plot.
 #' @export
 #'
+#' @seealso \code{\link{rp.acors}}, \code{\link{rp.patterns}}
+#'
 #' @examples
 #' rp <- rp.acors(rp.simdata, id.var="optional_ID")
 #' rp.hist(rp)
 rp.hist <- function(rp.object){
 
   #Check rp.object
-  if(!is(rp.object,"ResponsePatterns"))
+  if(!methods::is(rp.object,"ResponsePatterns"))
     stop("The object is not of class ResponsePatterns")
 
   if(rp.object@options$method=="acors") {

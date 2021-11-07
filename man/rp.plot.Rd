@@ -42,7 +42,11 @@ Plots a graph.
 This function plots an individual response for easier visual inspection. The observation can be identified by one of the following methods: observation number (obs), row name (rowname), or value of the ID variable (id, if defined in the rp.object). Only one of these identifiers should be specified. Using this function requires that the data are stored in the ResponsePatterns object.
 }
 \examples{
-rp.plot(rp.object, obs=1)
-rp.plot(rp.object, rowname="1254", groups=list(c(1:5),c(6:10)))
-rp.plot(rp.object, id="a25", page.breaks=c(5,10,15))
+rp <- rp.acors(rp.simdata, id.var="optional_ID")
+rp.plot(rp, obs=1)
+rp.plot(rp, rowname="12", groups=list(c(1:10),c(11:20)))
+rp.plot(rp, id="Natalya", page.breaks=c(5,10,15))
+}
+\seealso{
+\code{\link{rp.acors}}, \code{\link{rp.patterns}}, \code{\link{rp.plots2pdf}}
 }

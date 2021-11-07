@@ -15,6 +15,8 @@
 #' @return Plots a graph.
 #' @export
 #'
+#' @seealso \code{\link{rp.acors}}, \code{\link{rp.patterns}}, \code{\link{rp.plots2pdf}}
+#'
 #' @examples
 #' rp <- rp.acors(rp.simdata, id.var="optional_ID")
 #' rp.plot(rp, obs=1)
@@ -32,7 +34,7 @@ rp.plot <- function(rp.object,
 ){
 
   #Check rp.object
-  if(!is(rp.object,"ResponsePatterns"))
+  if(!methods::is(rp.object,"ResponsePatterns"))
     stop("The object is not of class ResponsePatterns")
   if(nrow(rp.object@data)==0 | ncol(rp.object@data)==0)
     stop("Use store.data=TRUE in rp.acors")
@@ -110,21 +112,21 @@ rp.plot <- function(rp.object,
       }
       sub <- substr(sub,start=1,stop=(nchar(sub)-2))
     }
-    base::plot(x=c(1:rp.object@n.vars), y=rp.object@data[obs,], type="l",
+    graphics::plot(x=c(1:rp.object@n.vars), y=rp.object@data[obs,], type="l",
                main=paste0(deparse(substitute(rp.object)),", obs=", obs, ", rwnm=", rownames(rp.object@data[obs,]),", id=",rp.object@id[obs]),
                #main=paste0(deparse(substitute(rp.object)),", rwnm=", rownames(rp.object@data[obs,])),
                sub=sub,cex.sub=.80,
                ylim=c(as.numeric(min(scale.levels)),as.numeric(max(scale.levels))),
                xlab="Item", ylab="Response")
     if(bw==FALSE)
-      lines(x=c(1:rp.object@n.vars), y=rp.object@data[obs,], type="p", pch=16,
+      graphics::lines(x=c(1:rp.object@n.vars), y=rp.object@data[obs,], type="p", pch=16,
             col=colors)
     else
-      lines(x=c(1:rp.object@n.vars), y=rp.object@data[obs,], type="p", pch=colors+14,
+      graphics::lines(x=c(1:rp.object@n.vars), y=rp.object@data[obs,], type="p", pch=colors+14,
             col=1)
     if(!is.null(page.breaks))
       for(pb in page.breaks)
-        abline(v=pb+0.5, col="black", lty="dotted")
+        graphics::abline(v=pb+0.5, col="black", lty="dotted")
   }
 
 }

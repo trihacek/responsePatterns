@@ -44,6 +44,11 @@ A response pattern yields perfect positive autocorrelation coefficient (r = 1) w
 Choosing a suitable maximum lag value, i.e. the maximum number of positions for the data to be shifted in autocorrelation analysis, is very important for a reliable screening. Maximum k value translates into the maximum length of a sequence within a repetitive response pattern that can be efficiently detected. Too low maximum k value hinders autocorrelation screening ability to detect longer repetitive response patterns, thus potentially lowering the method’s sensitivity (the ability to correctly detect careless respondents). On the other hand, maximum k value set too high generally lowers reliability, because it makes the instrumental data matrix smaller, and, by calculating higher numbers of autocorrelation coefficients, allows for higher frequency of occasionally strong autocorrelations that would inflate respondent’s final autocorrelation score (determined as the highest absolute autocorrelation coefficient found), thus lowering the method’s specificity (the ability to correctly not detect attentive respondents). If not specified by the used, the max.lag value is set to the number of variables – 3 internally.
 }
 \examples{
-rp.acors(data, id.var="id")
-rp.acors(data) \%>\% rp.select(percentile=90) \%>\% rp.indices()
+rp.acors(rp.simdata, max.lag=10, id.var="optional_ID")
+}
+\references{
+Gottfried, J., Jezek, S., & Kralova, M. (2021). \emph{Autocorrelation screening: A potentially efficient method for detecting repetitive response patterns in questionnaire data.} Manuscript submitted for review.
+}
+\seealso{
+\code{\link{rp.patterns}}, \code{\link{rp.indices}}, \code{\link{rp.select}}, \code{\link{rp.hist}}, \code{\link{rp.plot}}, \code{\link{rp.save2csv}}
 }

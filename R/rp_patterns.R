@@ -13,9 +13,10 @@
 #' @return Returns an S4 object of class "ResponsePatterns".
 #' @export
 #'
+#' @seealso \code{\link{rp.acors}}, \code{\link{rp.indices}}, \code{\link{rp.select}}, \code{\link{rp.hist}}, \code{\link{rp.plot}}, \code{\link{rp.save2csv}}
+#'
 #' @examples
 #' rp.patterns(rp.simdata, id.var="optional_ID")
-#' rp.patterns(rp.simdata, id.var="optional_ID") %>% rp.select(percentile=90) %>% rp.indices()
 rp.patterns <- function(data,
                         max.length=NULL,
                         min.length=2,

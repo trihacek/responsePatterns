@@ -9,6 +9,8 @@
 #' @return Returns a data frame.
 #' @export
 #'
+#' @seealso \code{\link{rp.acors}}, \code{\link{rp.patterns}}
+#'
 #' @examples
 #' rp <- rp.acors(rp.simdata, id.var="optional_ID")
 #' rp.indices(rp)
@@ -18,7 +20,7 @@ rp.indices <- function(rp.object,
 ) {
 
   #Check rp.object
-  if(!is(rp.object,"ResponsePatterns"))
+  if(!methods::is(rp.object,"ResponsePatterns"))
     stop("The object is not of class ResponsePatterns")
 
   indices <- round(rp.object@indices,round)

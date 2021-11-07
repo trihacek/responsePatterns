@@ -11,6 +11,8 @@
 #' @return Exports a CSV file.
 #' @export
 #'
+#' @seealso \code{\link{rp.acors}}, \code{\link{rp.patterns}}, \code{\link{rp.indices}}
+#'
 #' @examples
 #' rp <- rp.acors(rp.simdata, id.var="optional_ID")
 #' rp.save2csv(rp)
@@ -23,7 +25,7 @@ rp.save2csv <- function(rp.object,
 ) {
 
   #Check rp.object
-  if(!is(rp.object,"ResponsePatterns"))
+  if(!methods::is(rp.object,"ResponsePatterns"))
     stop("The object is not of class ResponsePatterns")
   #Check the csv parameter
   csv <- csv[1]
@@ -39,8 +41,8 @@ rp.save2csv <- function(rp.object,
     output <- cbind(rp.object@id,output)
 
   if(csv=="csv")
-    write.csv(output, file=file)
+    utils::write.csv(output, file=file)
   else
-    write.csv2(output, file=file)
+    utils::write.csv2(output, file=file)
 
 }
