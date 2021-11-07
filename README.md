@@ -149,27 +149,29 @@ head(indices)
 Or export them into a CVS file for further processing.
 
 ``` r
-#Or export them into a CVS file for further processing
-rp.save2csv(rp1) 
+# Or export them into a CVS file for further processing
+rp.save2csv(rp1)
 
-#You may also plot a histogram of the "suspicion" score to get an idea of 
-#what your data set looks like overall
+# You may also plot a histogram of the 'suspicion' score to get an idea of what
+# your data set looks like overall
 rp.hist(rp1)
 ```
 
 Third, plot individual responses that warrant closer inspection.
 
 ``` r
-#Select the observation (see IMG 1)
-rp.plot(rp.selected, obs=1)
+# Select the observation (see IMG 1)
+rp.plot(rp.selected, obs = 1)
 
-#Optionally, color the items based on their valence (or any other criterion) and 
-#display pagination of the questionnaire (see IMG 2)
-rp.plot(rp.selected, obs=1, groups=list(c(1:10),c(11:20)), page.breaks=c(5,10,15))
+# Optionally, color the items based on their valence (or any other criterion)
+# and display pagination of the questionnaire (see IMG 2)
+rp.plot(rp.selected, obs = 1, groups = list(c(1:10), c(11:20)), page.breaks = c(5,
+    10, 15))
 
-#You may also export a collection of plot into a PDF file (utilizing the same 
-#graphical arguments as the single rp.plot function)
-rp.plots2pdf(rp.selected, groups=list(c(1:10),c(11:20)), page.breaks=c(5,10,15))
+# You may also export a collection of plot into a PDF file (utilizing the same
+# graphical arguments as the single rp.plot function)
+rp.plots2pdf(rp.selected, groups = list(c(1:10), c(11:20)), page.breaks = c(5, 10,
+    15))
 ```
 
 |       IMG 1 (basic version)        |      IMG 2 (enhanced version)      |
@@ -181,7 +183,11 @@ You may also use pipelines to streamline the process if you like.
 ``` r
 library(magrittr)
 
-rp1 %>% rp.select(percentile=90) %>% rp.indices()
+rp1 %>%
+    rp.select(percentile = 90) %>%
+    rp.indices()
 
-rp2 %>% rp.select(percentile=80) %>% rp.plots2pdf()
+rp2 %>%
+    rp.select(percentile = 80) %>%
+    rp.plots2pdf()
 ```

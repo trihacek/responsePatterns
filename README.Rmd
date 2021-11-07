@@ -88,7 +88,7 @@ head(indices)
 
 Or export them into a CVS file for further processing.
 
-```{r, eval=FALSE}
+```{r, tidy=TRUE, eval=FALSE}
 
 #Or export them into a CVS file for further processing
 rp.save2csv(rp1) 
@@ -100,7 +100,7 @@ rp.hist(rp1)
 ```
 
 Third, plot individual responses that warrant closer inspection.
-```{r, eval=FALSE}
+```{r, tidy=TRUE, eval=FALSE}
 #Select the observation (see IMG 1)
 rp.plot(rp.selected, obs=1)
 
@@ -118,7 +118,7 @@ IMG 1 (basic version)      |  IMG 2 (enhanced version)
 ![IMG 1](man/figures/Rplot_01.png)  |  ![IMG 2](man/figures/Rplot_02.png)
 
 You may also use pipelines to streamline the process if you like.
-```{r, eval=FALSE}
+```{r, tidy=TRUE, eval=FALSE}
 library(magrittr)
 
 rp1 %>% rp.select(percentile=90) %>% rp.indices()
