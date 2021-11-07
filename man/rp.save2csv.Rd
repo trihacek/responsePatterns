@@ -31,8 +31,8 @@ This functions exports the ResponsePatterns object indices and, optionally, coef
 }
 \examples{
 rp <- rp.acors(rp.simdata, id.var="optional_ID")
-rp.save2csv(rp)
-rp.save2csv(rp, include.coefs=FALSE, include.data=FALSE)
+\dontrun{rp.save2csv(rp)}
+\dontrun{rp.save2csv(rp, include.coefs=FALSE, include.data=FALSE)}
 }
 \seealso{
 \code{\link{rp.acors}}, \code{\link{rp.patterns}}, \code{\link{rp.indices}}

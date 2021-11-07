@@ -15,8 +15,8 @@
 #'
 #' @examples
 #' rp <- rp.acors(rp.simdata, id.var="optional_ID")
-#' rp.save2csv(rp)
-#' rp.save2csv(rp, include.coefs=FALSE, include.data=FALSE)
+#' \dontrun{rp.save2csv(rp)}
+#' \dontrun{rp.save2csv(rp, include.coefs=FALSE, include.data=FALSE)}
 rp.save2csv <- function(rp.object,
                         file="rp_results.csv",
                         csv=c("csv","csv2"),

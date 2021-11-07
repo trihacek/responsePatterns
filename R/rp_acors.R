@@ -16,6 +16,7 @@
 #'
 #' @return Returns an S4 object of class "ResponsePatterns".
 #' @export
+#' @importFrom methods new
 #'
 #' @references Gottfried, J., Jezek, S., & Kralova, M. (2021). *Autocorrelation screening: A potentially efficient method for detecting repetitive response patterns in questionnaire data.* Manuscript submitted for review.
 #' @seealso \code{\link{rp.patterns}}, \code{\link{rp.indices}}, \code{\link{rp.select}}, \code{\link{rp.hist}}, \code{\link{rp.plot}}, \code{\link{rp.save2csv}}

@@ -12,6 +12,7 @@
 #'
 #' @return Returns an S4 object of class "ResponsePatterns".
 #' @export
+#' @importFrom methods new
 #'
 #' @seealso \code{\link{rp.acors}}, \code{\link{rp.indices}}, \code{\link{rp.select}}, \code{\link{rp.hist}}, \code{\link{rp.plot}}, \code{\link{rp.save2csv}}
 #'

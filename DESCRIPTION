@@ -1,5 +1,5 @@
 Package: responsePatterns
-Title: Searches for Careless Responding Patterns in the Data
+Title: Screening of careless responding patterns
 Version: 0.0.0.9000
 Authors@R: c(
     person(given = "Tomas",

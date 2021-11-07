@@ -31,7 +31,7 @@ This function exports individual plots of all observations to a PDF file. Limit 
 }
 \examples{
 rp <- rp.acors(rp.simdata, id.var="optional_ID")
-rp.plots2pdf(rp)
+\dontrun{rp.plots2pdf(rp)}
 }
 \seealso{
 \code{\link{rp.acors}}, \code{\link{rp.patterns}}, \code{\link{rp.plot}}

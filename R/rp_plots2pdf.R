@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' rp <- rp.acors(rp.simdata, id.var="optional_ID")
-#' rp.plots2pdf(rp)
+#' \dontrun{rp.plots2pdf(rp)}
 rp.plots2pdf <- function(rp.object,
                          file="rp_plots.pdf",
                          groups=NULL,
