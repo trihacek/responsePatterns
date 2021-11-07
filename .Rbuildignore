@@ -3,5 +3,5 @@
 ^_archive$
 ^LICENSE\.md$
 ^README\.Rmd$
-^NEWS\.Rmd$
+^NEWS\.md$
 ^cran-comments\.md$
