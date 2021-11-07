@@ -177,8 +177,7 @@ rp.plots2pdf(rp.selected, groups=list(c(1:10),c(11:20)), page.breaks=c(5,10,15))
 
 <!--![IMG 1](man\figures\Rplot_01.png)  |  ![IMG 2](man\figures\Rplot_02.png)-->
 
-![IMG 1](blob\master\man\figures\Rplot_01.png) \| ![IMG
-2](blob\master\man\figures\Rplot_02.png)
+![IMG 1](man/figures/Rplot_01.png) \| ![IMG 2](man/figures/Rplot_02.png)
 
 You may also use pipelines to streamline the process if you like.
 
