@@ -2,7 +2,7 @@
 #'
 #' Auto-correlations of survey data allow for a probabilistic detection of repetitive patterns. This function calculates auto-correlation coefficients for all lags up to the value defined by the max.lag parameter for each observation (respondent). Subsequently, it assigns a percentile value to each observation (respondent) based either on the highest absolute auto-correlation or the sum of absolute auto-correlations. It is essential to keep the variables in the order in which they were presented to respondents.
 #'
-#' A response pattern yields perfect positive autocorrelation coefficient (r = 1) when the lag is equal to the length of the pattern, provided the pattern itself is uninterrupted over the whole vector of responses. There are two reasons for which the computation of auto-correlation computation can fail, both of which are associated with possible threat to data validity: (1) the pattern is composed of a vector of identical values (e.g., 2,2,2,2,2,2,2). In such cases, a correlation coefficient cannot be computed due to a zero variance but we arbitrarily set the value r = 1 because it meets the definition of a perfectly repetitive pattern; (2) the sequence contains too many missing values. In such cases we set the value to NA. However, in computing the sum of absolute auto-correlation values we treat these values as “r = 1” since they warrant closer inspection.
+#' A response pattern yields perfect positive autocorrelation coefficient (r = 1) when the lag is equal to the length of the pattern, provided the pattern itself is uninterrupted over the whole vector of responses. There are two reasons for which the computation of auto-correlation computation can fail, both of which are associated with possible threat to data validity: (1) the pattern is composed of a vector of identical values (e.g., 2,2,2,2,2,2,2). In such cases, a correlation coefficient cannot be computed due to a zero variance but we arbitrarily set the value r = 1 because it meets the definition of a perfectly repetitive pattern; (2) the sequence contains too many missing values. In such cases we set the value to NA.
 #'
 #' Choosing a suitable maximum lag value, i.e. the maximum number of positions for the data to be shifted in autocorrelation analysis, is very important for a reliable screening. Maximum k value translates into the maximum length of a sequence within a repetitive response pattern that can be efficiently detected. Too low maximum k value hinders autocorrelation screening ability to detect longer repetitive response patterns, thus potentially lowering the method’s sensitivity (the ability to correctly detect careless respondents). On the other hand, maximum k value set too high generally lowers reliability, because it makes the instrumental data matrix smaller, and, by calculating higher numbers of autocorrelation coefficients, allows for higher frequency of occasionally strong autocorrelations that would inflate respondent’s final autocorrelation score (determined as the highest absolute autocorrelation coefficient found), thus lowering the method’s specificity (the ability to correctly not detect attentive respondents). If not specified by the used, the max.lag value is set to the number of variables – 3 internally.
 #' @param data A data set containing variables to analyze and (optionally) an ID variable.
@@ -115,7 +115,7 @@ rp.acors <- function(data,
     }
     acors <- abs(acors.df[i,paste0("lag",c(min.lag:max.lag))])
     if(sum(is.na(acors)) < length(acors)) {
-      indices.df$sum.abs.ac[i] <- sum(acors,na.rm=T) + sum(is.na(acors))
+      indices.df$sum.abs.ac[i] <- sum(acors,na.rm=T) #+ sum(is.na(acors))
       indices.df$max.abs.ac[i] <- max(acors,na.rm=TRUE)
       indices.df$max.ac.lag[i] <- which(acors == max(acors,na.rm=TRUE))[1]
     } else {
@@ -124,8 +124,6 @@ rp.acors <- function(data,
     }
   }
 
-  #indices.df$percentile <- floor(rank(indices.df$max.abs.ac,na.last=FALSE) / nrow(indices.df) * 100)
-  #indices.df$percentile <- floor(rank(indices.df$sum.abs.ac,na.last=FALSE) / nrow(indices.df) * 100)
   indices.df$percentile <- switch(percentile.method,
     "max"=floor(rank(indices.df$max.abs.ac,na.last=FALSE) / nrow(indices.df) * 100),
     "sum"=floor(rank(indices.df$sum.abs.ac,na.last=FALSE) / nrow(indices.df) * 100)
