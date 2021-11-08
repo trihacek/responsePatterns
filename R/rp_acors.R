@@ -125,8 +125,8 @@ rp.acors <- function(data,
   }
 
   indices.df$percentile <- switch(percentile.method,
-    "max"=floor(rank(indices.df$max.abs.ac,na.last=FALSE) / nrow(indices.df) * 100),
-    "sum"=floor(rank(indices.df$sum.abs.ac,na.last=FALSE) / nrow(indices.df) * 100)
+    "max"=floor(rank(indices.df$max.abs.ac,na.last=TRUE) / nrow(indices.df) * 100),
+    "sum"=floor(rank(indices.df$sum.abs.ac,na.last=TRUE) / nrow(indices.df) * 100)
   )
 
   if(store.data==TRUE)
