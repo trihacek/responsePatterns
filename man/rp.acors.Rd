@@ -12,7 +12,7 @@ rp.acors(
   na.rm = FALSE,
   cor.method = c("pearson", "spearman", "kendall"),
   percentile.method = c("max", "sum"),
-  na.last = TRUE,
+  na.top = FALSE,
   store.data = TRUE
 )
 }
@@ -31,7 +31,7 @@ rp.acors(
 
 \item{percentile.method}{A string. Should the percentiles be based on the maximum absolute auto-correlation or on the sum of the absolute values of all auto-correlations (defaults to "max").}
 
-\item{na.last}{A logical scalar. Should NA indices be ranked as last?}
+\item{na.top}{A logical scalar. Should NA indices (i.e., those that could not be computed due to data missingness) be ranked at the top? Defaults to FALSE.}
 
 \item{store.data}{A logical scalar. Should the data be stored within the object? Set to TRUE if you want to use the rp.plot or rp.save2csv functions.}
 }

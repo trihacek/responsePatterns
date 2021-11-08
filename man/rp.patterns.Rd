@@ -11,7 +11,7 @@ rp.patterns(
   id.var = NULL,
   na.rm = FALSE,
   std.patterns = TRUE,
-  na.last = TRUE,
+  na.top = FALSE,
   store.data = TRUE
 )
 }
@@ -28,7 +28,7 @@ rp.patterns(
 
 \item{std.patterns}{A logical scalar. If set to true, patterns are "standardized" by subtracting the minimum value from all elements. As a result, patterns are compared in terms of their relative "shape" (i.e., "1-2-3" and "3-4-5" are considered identical patterns). If set to FALSE, patterns are compared in terms of their original values (i.e., "1-2-3" and "3-4-5" are considered distinct patterns).}
 
-\item{na.last}{A logical scalar. Should NA indices be ranked as last?}
+\item{na.top}{A logical scalar. Should NA indices (i.e., those that could not be computed due to data missingness) be ranked at the top? Defaults to FALSE.}
 
 \item{store.data}{A logical scalar. Should the data be stored within the object? Set to TRUE if you want to use the rp.plot or rp.save2csv functions.}
 }

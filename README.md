@@ -97,7 +97,7 @@ library(responsePatterns)
 #> This is responsePatterns 0.0.0.9000. Note: this is BETA software! Please mind that the package may not be stable and report any bugs! For questions and issues, please see github.com/trihacek/responsePatterns.
 # Use auto-correlation screening to find patterns in the data
 rp1 <- rp.acors(rp.simdata, max.lag = 5, id.var = "optional_ID")
-# Alternatively, use an iterative mechanistic method fo pattern detection
+# Alternatively, use an iterative mechanistic method for pattern detection
 rp2 <- rp.patterns(rp.simdata, id.var = "optional_ID")
 # The analysis may take some time for longer data sets...
 
