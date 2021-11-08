@@ -12,6 +12,7 @@
 #' @param na.rm A logical scalar. Should missing values be removed from the computation of auto-correlations?
 #' @param cor.method A string. Defined the method used to compute auto-correlations (defaults to "pearson").
 #' @param percentile.method A string. Should the percentiles be based on the maximum absolute auto-correlation or on the sum of the absolute values of all auto-correlations (defaults to "max").
+#' @param na.last A logical scalar. Should NA indices be ranked as last?
 #' @param store.data A logical scalar. Should the data be stored within the object? Set to TRUE if you want to use the rp.plot or rp.save2csv functions.
 #'
 #' @return Returns an S4 object of class "ResponsePatterns".
@@ -30,6 +31,7 @@ rp.acors <- function(data,
                      na.rm=FALSE,
                      cor.method=c("pearson","spearman","kendall"),
                      percentile.method=c("max","sum"),
+                     na.last=TRUE,
                      store.data=TRUE
 ) {
 
@@ -125,8 +127,8 @@ rp.acors <- function(data,
   }
 
   indices.df$percentile <- switch(percentile.method,
-    "max"=floor(rank(indices.df$max.abs.ac,na.last=TRUE) / nrow(indices.df) * 100),
-    "sum"=floor(rank(indices.df$sum.abs.ac,na.last=TRUE) / nrow(indices.df) * 100)
+    "max"=floor(rank(indices.df$max.abs.ac,na.last=na.last) / nrow(indices.df) * 100),
+    "sum"=floor(rank(indices.df$sum.abs.ac,na.last=na.last) / nrow(indices.df) * 100)
   )
 
   if(store.data==TRUE)
