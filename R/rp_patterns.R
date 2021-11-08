@@ -81,8 +81,8 @@ rp.patterns <- function(data,
           #Standardize the sequence
           if(std.patterns==TRUE)
             sequence <- sequence - min(sequence, na.rm=TRUE)
-          #Compare teh sequence to the pattern
-          is.equal <- all(sequence==pattern)
+          #Compare the sequence to the pattern
+          is.equal <- all(sequence==pattern, na.rm=na.rm)
           if(!is.na(is.equal) & is.equal==TRUE)
             count <- count + 1
         }
