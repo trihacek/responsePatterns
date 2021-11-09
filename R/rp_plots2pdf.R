@@ -2,6 +2,8 @@
 #'
 #' This function exports individual plots of all observations to a PDF file. Limit the number of observation via \code{\link{rp.select}}.
 #'
+#' If you have trouble exporting the PDF file, close all active graphical devices by running \code{\link[grDevices]{dev.off}} several times.
+#'
 #' @param rp.object A ResponsePatterns object.
 #' @param file A string. A filename of the PDF file.
 #' @param groups A list of vectors. Defines groups of items that should be plotted using the same color.

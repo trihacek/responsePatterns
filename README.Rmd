@@ -25,6 +25,8 @@ Some survey participants tend to respond carelessly which complicates data analy
 
 Both approaches yield scores that serve as estimates of how problematic the observations potentially are ("suspicion" scores). However, no conclusions should be made without a closer inspection of the problematic responses. Any decision about removing or downweighing an observation should be based on visual inspection of the responses, the specifics of the instrument used to collect the data, researchers' familiarity with the whole data set and the context of the data collection process.
 
+In order to prevent bias, only questions with the same answer scales should be analyzed at one time, ideally. Analyzing responses on two scales with different number ranges together (e.g., answers on scale 1–5 and answers on scale 1–100) can bias the results to a great extent. See below for an example of how to analyze data from several questionnaires simultaneously. Questions with unique scales or answer options where repetitive response patterns are unlikely or even impossible to emerge, like questions about gender or education, should be excluded prior to screening.
+
 Both core functions return an S4 object of class ResponsePatterns. The package offers several utility functions that allow to inspect to results of the analysis more closely:  
 - **`rp.summary`** (or, simply, **`summary`**) provides an overview of the object;  
 - **`rp.indices`** extracts indices and, optionally, coefficients, from the object;  
@@ -120,8 +122,46 @@ You may also use pipelines to streamline the process if you like.
 ```{r, tidy=TRUE, eval=FALSE}
 library(magrittr)
 
-rp1 %>% rp.select(percentile=90) %>% rp.indices()
+rp.acors(rp.simdata, max.lag=5, id.var="optional_ID") %>% rp.select(percentile=90) %>% rp.indices()
 
 rp2 %>% rp.select(percentile=80) %>% rp.plots2pdf()
+
+```
+
+Sometimes, we use multiple questionnaires in a survey. In such a case, we may wish to analyze the data from all questionnaires simultaneously. We do not recommend entering all data in a single analysis, since different questionnaires may use different rating scales and participants may change their style of responding. Instead, we recommend analyzing each questionnaire separately and then collate the results. The make this example easy, let imagine that the \code{rp.simdata} data set consists of data collected via four 5-item questionnaires.
+```{r, tidy=TRUE, eval=FALSE}
+#First, analyze each questionnaire separately
+rp.a <- rp.acors(rp.simdata[,c(2:6)])
+rp.b <- rp.acors(rp.simdata[,c(7:11)])
+rp.c <- rp.acors(rp.simdata[,c(12:16)])
+rp.d <- rp.acors(rp.simdata[,c(17:21)])
+
+#Second, collate the percentiles
+percentiles <- as.data.frame(cbind(rp.simdata$optional_ID,
+                     rp.indices(rp.a)$percentile,
+                     rp.indices(rp.b)$percentile,
+                     rp.indices(rp.c)$percentile,
+                     rp.indices(rp.d)$percentile))
+
+#Choose a cutoff, let's say the 95th percentile, and count how many time the person exceeded this cutoff (here, we chose the 80th percentile for demonstration reasons, because the 95th percentile would not yield any suspicious responses)
+percentile.cutoff <- 80
+percentiles$sum <- rowSums(percentiles > percentile.cutoff)
+
+#Decide on how many placings of the respondent above the percentile cutoff score should be considered problematic. Then, select potentially problematic responses
+sum.cutoff <- 2
+IDs <- percentiles[percentiles$sum >= sum.cutoff, 1]
+
+#Create a loop to output these responses into a PDF file for further inspection.
+pdf(file="rp_plots_screening.pdf", width=10, height=6)
+for(i in 1:length(IDs)) {
+  layout(matrix(1:4,ncol=2,nrow=2,byrow=T))
+  rp.plot(rp.a,obs=i)
+  rp.plot(rp.b,obs=i)
+  rp.plot(rp.c,obs=i)
+  rp.plot(rp.d,obs=i)
+}
+dev.off()
+
+#Then, open the PDF file and explore the responses to decide if any of them should be removed from the analysis.
 
 ```

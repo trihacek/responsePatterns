@@ -2,6 +2,8 @@
 #'
 #' This function searches mechanically for repetitive patterns in the data. It searches for patterns of a given length (all values between min.length and max.length) using an iterative algorithm. The patterns are defined based on the data: if a sequence of values occurs more than once within an observation, it is considered a repetition. The algorithm counts the number of repetitions for each pattern length and then weighs this sum by the length of the pattern (longer patterns are assigned higher weight). The total score for each respondent is determined as the sum of scores achieved for each pattern length and is standardized to a value between 0 and 1. It is essential to keep the variables in the order in which they were presented to respondents.
 #'
+#' #' In order to prevent bias, only questions with the same answer scales should be analyzed at one time, ideally. Analyzing responses on two scales with different number ranges together (e.g., answers on scale 1–5 and answers on scale 1–100) can bias the results to a great extent. See \href{https://github.com/trihacek/responsePatterns}{GitHub} for an example of how to analyze data from several questionnaires simultaneously. Questions with unique scales or answer options where repetitive response patterns are unlikely or even impossible to emerge, like questions about gender or education, should be excluded prior to screening.
+#'
 #' @param data A data frame. A data set containing variables to analyze and, optionally, an ID variable.
 #' @param max.length An integer. Define the maximum length of a pattern (cannot be longer than the number of variables/2).
 #' @param min.length An integer. Define the minimum length of a pattern (defaults to 2).

@@ -29,6 +29,9 @@ Creates a PDF file.
 \description{
 This function exports individual plots of all observations to a PDF file. Limit the number of observation via \code{\link{rp.select}}.
 }
+\details{
+If you have trouble exporting the PDF file, close all active graphical devices by running \code{\link[grDevices]{dev.off}} several times.
+}
 \examples{
 rp <- rp.acors(rp.simdata, id.var="optional_ID")
 \dontrun{rp.plots2pdf(rp)}
