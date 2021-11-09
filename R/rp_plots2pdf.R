@@ -1,6 +1,6 @@
 #' Export multiple plots to PDF
 #'
-#' This function exports individual plots of all observations to a PDF file. Limit the number of observation by rp.select.
+#' This function exports individual plots of all observations to a PDF file. Limit the number of observation via \code{\link{rp.select}}.
 #'
 #' @param rp.object A ResponsePatterns object.
 #' @param file A string. A filename of the PDF file.

@@ -2,7 +2,7 @@
 #'
 #' @param rp.object A ResponsePatterns object.
 #'
-#' @return Prints summary information about a ResponsePatterns object.
+#' @return Prints a summary of a ResponsePatterns object.
 #' @export
 #'
 #' @examples

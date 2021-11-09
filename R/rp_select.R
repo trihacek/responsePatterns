@@ -3,7 +3,7 @@
 #' This function reorders observations and selects those equal of above a defined percentile.
 #'
 #' @param rp.object A ResponsePatterns object.
-#' @param percentile An integer. Defines a percentile cutoff.
+#' @param percentile An integer. Defines a percentile cutoff. Setting the value to zero keeps all observations but the data are ordered based on the percentile.
 #'
 #' @return A ResponsePatterns object.
 #' @export

@@ -27,7 +27,7 @@ rp.plots2pdf(
 Creates a PDF file.
 }
 \description{
-This function exports individual plots of all observations to a PDF file. Limit the number of observation by rp.select.
+This function exports individual plots of all observations to a PDF file. Limit the number of observation via \code{\link{rp.select}}.
 }
 \examples{
 rp <- rp.acors(rp.simdata, id.var="optional_ID")

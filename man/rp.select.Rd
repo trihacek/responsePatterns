@@ -9,7 +9,7 @@ rp.select(rp.object, percentile = 90)
 \arguments{
 \item{rp.object}{A ResponsePatterns object.}
 
-\item{percentile}{An integer. Defines a percentile cutoff.}
+\item{percentile}{An integer. Defines a percentile cutoff. Setting the value to zero keeps all observations but the data are ordered based on the percentile.}
 }
 \value{
 A ResponsePatterns object.

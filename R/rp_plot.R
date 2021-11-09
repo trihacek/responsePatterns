@@ -1,15 +1,15 @@
 #' Plot an individual response
 #'
-#' This function plots an individual response for easier visual inspection. The observation can be identified by one of the following methods: observation number (obs), row name (rowname), or value of the ID variable (id, if defined in the rp.object). Only one of these identifiers should be specified. Using this function requires that the data are stored in the ResponsePatterns object.
+#' This function plots an individual response for easier visual inspection. The observation can be identified by one of the following methods: observation number (obs), row name (rowname), or the value of the ID variable (id, if defined in the rp.object). Only one of these identifiers should be specified. Using this function requires that the data are stored in the ResponsePatterns object.
 #'
 #' @param rp.object A ResponsePatterns object.
 #' @param obs An integer. The number of observation to plot.
 #' @param rowname A string. The row name of the observation to plot.
 #' @param id A string. The value of the ID variable (if defined in the ResponsePatterns object).
-#' @param plot A logical scalar. Should a the data be plotted?
-#' @param text.output A logical scalar. Should a the data be printed to the console?
+#' @param plot A logical scalar. Should the responses be plotted?
+#' @param text.output A logical scalar. Should the responses be printed to the console?
 #' @param groups A list of vectors. Defines groups of items that should be plotted using the same color.
-#' @param page.breaks A vector. Draws a vertical line after the items (useful if you want to display the pagination of the questionnaire in the plot).
+#' @param page.breaks A vector. Draws a vertical line after the specified items (useful if you want to display the pagination of the questionnaire in the plot).
 #' @param bw A logical scalar. Should the plot be printed in black and white?
 #'
 #' @return Plots a graph.

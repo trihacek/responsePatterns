@@ -25,13 +25,13 @@ rp.plot(
 
 \item{id}{A string. The value of the ID variable (if defined in the ResponsePatterns object).}
 
-\item{plot}{A logical scalar. Should a the data be plotted?}
+\item{plot}{A logical scalar. Should the responses be plotted?}
 
-\item{text.output}{A logical scalar. Should a the data be printed to the console?}
+\item{text.output}{A logical scalar. Should the responses be printed to the console?}
 
 \item{groups}{A list of vectors. Defines groups of items that should be plotted using the same color.}
 
-\item{page.breaks}{A vector. Draws a vertical line after the items (useful if you want to display the pagination of the questionnaire in the plot).}
+\item{page.breaks}{A vector. Draws a vertical line after the specified items (useful if you want to display the pagination of the questionnaire in the plot).}
 
 \item{bw}{A logical scalar. Should the plot be printed in black and white?}
 }
@@ -39,7 +39,7 @@ rp.plot(
 Plots a graph.
 }
 \description{
-This function plots an individual response for easier visual inspection. The observation can be identified by one of the following methods: observation number (obs), row name (rowname), or value of the ID variable (id, if defined in the rp.object). Only one of these identifiers should be specified. Using this function requires that the data are stored in the ResponsePatterns object.
+This function plots an individual response for easier visual inspection. The observation can be identified by one of the following methods: observation number (obs), row name (rowname), or the value of the ID variable (id, if defined in the rp.object). Only one of these identifiers should be specified. Using this function requires that the data are stored in the ResponsePatterns object.
 }
 \examples{
 rp <- rp.acors(rp.simdata, id.var="optional_ID")

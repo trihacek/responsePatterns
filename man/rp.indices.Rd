@@ -11,7 +11,7 @@ rp.indices(rp.object, round = 2, include.coefs = TRUE)
 
 \item{round}{An integer. The number of decimal places to which the indices should be rounded.}
 
-\item{include.coefs}{A logical scalar. Should the returned data set contain also all coefficients?}
+\item{include.coefs}{A logical scalar. Should the returned data frame include also the coefficients?}
 }
 \value{
 Returns a data frame.

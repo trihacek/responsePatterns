@@ -13,7 +13,7 @@ rp.hist(rp.object)
 Returns a plot.
 }
 \description{
-This function plots a histogram of the main "suspicion" index. The choice of the index depends on the type and setting of the analysis: it is either the maximum absolute auto-correlation or the sum of absolute auto-correlations if analyzed via the rp.acors function and the total score of analyzed via the rp.patterns function.
+This function plots a histogram of the main "suspicion" index. The choice of the index depends on the type and setting of the analysis: it is either the maximum absolute auto-correlation or the sum of absolute auto-correlations if analyzed via the \code{\link{rp.acors}} function and the total score of analyzed via the \code{\link{rp.patterns}} function.
 }
 \examples{
 rp <- rp.acors(rp.simdata, id.var="optional_ID")

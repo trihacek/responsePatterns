@@ -1,13 +1,13 @@
 #' Repetitive pattern analysis
 #'
-#' This function mechanically searches for repetitive patterns in the data. It searches for patterns of a given length (all values between min.length and max.length) using an iterative algorithm. The patterns are defined based on the data: if a sequence of values occurs more than once within an observation, it is considered a repetition. The algorithm counts the number of repetitions for each pattern length and then weighs this sum by the length of the pattern (longer patterns are assigned higher weight). The total score for each respondent is determined as the sum of these pattern length-specific scores and is standardized to take a value between 0 and 1. It is essential to keep the variables in the order in which they were presented to respondents.
+#' This function searches mechanically for repetitive patterns in the data. It searches for patterns of a given length (all values between min.length and max.length) using an iterative algorithm. The patterns are defined based on the data: if a sequence of values occurs more than once within an observation, it is considered a repetition. The algorithm counts the number of repetitions for each pattern length and then weighs this sum by the length of the pattern (longer patterns are assigned higher weight). The total score for each respondent is determined as the sum of scores achieved for each pattern length and is standardized to a value between 0 and 1. It is essential to keep the variables in the order in which they were presented to respondents.
 #'
-#' @param data A data set containing variables to analyze and (optionally) an ID variable.
+#' @param data A data frame. A data set containing variables to analyze and, optionally, an ID variable.
 #' @param max.length An integer. Define the maximum length of a pattern (cannot be longer than the number of variables/2).
 #' @param min.length An integer. Define the minimum length of a pattern (defaults to 2).
 #' @param id.var A string. If the data set contains an ID variable, specify it's name.
-#' @param na.rm A logical scalar. Should missing values be removed from the computation of auto-correlations?
-#' @param std.patterns A logical scalar. If set to true, patterns are "standardized" by subtracting the minimum value from all elements. As a result, patterns are compared in terms of their relative "shape" (i.e., "1-2-3" and "3-4-5" are considered identical patterns). If set to FALSE, patterns are compared in terms of their original values (i.e., "1-2-3" and "3-4-5" are considered distinct patterns).
+#' @param na.rm A logical scalar. Should missing values be ignored when comparing sequences of data?
+#' @param std.patterns A logical scalar. If set to true, patterns are "standardized" by subtracting the minimum value from all elements in the sequence. As a result, patterns are compared in terms of their relative relationships (i.e., "1-2-3" and "3-4-5" are considered identical patterns). If set to FALSE, patterns are compared in terms of their absolute values (i.e., "1-2-3" and "3-4-5" are considered distinct patterns).
 #' @param na.top A logical scalar. Should NA indices (i.e., those that could not be computed due to data missingness) be ranked at the top? Defaults to FALSE.
 #' @param store.data A logical scalar. Should the data be stored within the object? Set to TRUE if you want to use the rp.plot or rp.save2csv functions.
 #'

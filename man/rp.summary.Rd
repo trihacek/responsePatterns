@@ -10,7 +10,7 @@ rp.summary(rp.object)
 \item{rp.object}{A ResponsePatterns object.}
 }
 \value{
-Prints summary information about a ResponsePatterns object.
+Prints a summary of a ResponsePatterns object.
 }
 \description{
 SUmmary of an ResponsePatterns object

@@ -4,7 +4,7 @@
 #'
 #' @param rp.object A ResponsePatterns object.
 #' @param round An integer. The number of decimal places to which the indices should be rounded.
-#' @param include.coefs A logical scalar. Should the returned data set contain also all coefficients?
+#' @param include.coefs A logical scalar. Should the returned data frame include also the coefficients?
 #'
 #' @return Returns a data frame.
 #' @export

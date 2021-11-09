@@ -8,9 +8,9 @@
 
 Some survey participants tend to respond carelessly which complicates
 data analysis. This package provides functions that make it easier to
-explore responses and identify those that may be problematic. Two core
-functions of this package provide two approaches to the problem of
-careless responses detection:  
+explore responses and identify those that may be problematic. This
+package implements two approaches to the problem of careless responses
+detection:  
 - **`rp.acors`** is based on the auto-correlation approach that allows
 for a probabilistic detection of repetitive patterns a in survey data.
 This function calculates auto-correlation coefficients for all lags up
@@ -25,16 +25,17 @@ once within an observation, it is considered a repetition. The algorithm
 counts the number of repetitions for each pattern length and then weighs
 this sum by the length of the pattern (longer patterns are assigned
 higher weight). The total score for each respondent is determined as the
-sum of these pattern length-specific scores and is standardized to take
-a value between 0 and 1.
+sum of scores achieved for each pattern length and is standardized to a
+value between 0 and 1.
 
 Both approaches yield scores that serve as estimates of how problematic
-the observations potentially are. However, no conclusions should be made
-without a closer inspection of the problematic responses. Any decision
-about removing or downweighing an observation should be based on visual
-inspection of the responses, the specifics of the instrument used to
-collect the data, familiarity with the whole data set and the context of
-the data collection process.
+the observations potentially are (“suspicion” scores). However, no
+conclusions should be made without a closer inspection of the
+problematic responses. Any decision about removing or downweighing an
+observation should be based on visual inspection of the responses, the
+specifics of the instrument used to collect the data, researchers’
+familiarity with the whole data set and the context of the data
+collection process.
 
 Both core functions return an S4 object of class ResponsePatterns. The
 package offers several utility functions that allow to inspect to
@@ -47,7 +48,7 @@ the object;
 a defined percentile;  
 - **`rp.save2csv`** exports indices and, optionally, coefficients and
 data into a CSV file;  
-- **`rp.hist`** plots a histogram of the main “suspicion” index (see
+- **`rp.hist`** plots a histogram of the main “suspicion” index (see the
 documentation for further details);  
 - **`rp.plot`** plots an individual response for easier visual
 inspection and allows for graphical formatting that eases this
@@ -55,7 +56,7 @@ inspection;
 - **`rp.plots2pdf`** exports a collection of individual plots into a PDF
 file.
 
-The rationale for response pattern analysis is described in
+The rationale for response pattern analysis is described in:
 
 > Gottfried, J., Jezek, S., & Kralova, M. (2021). *Autocorrelation
 > screening: A potentially efficient method for detecting repetitive
@@ -99,7 +100,6 @@ library(responsePatterns)
 rp1 <- rp.acors(rp.simdata, max.lag = 5, id.var = "optional_ID")
 # Alternatively, use an iterative mechanistic method for pattern detection
 rp2 <- rp.patterns(rp.simdata, id.var = "optional_ID")
-# The analysis may take some time for longer data sets...
 
 # Display a summary of the analysis
 rp.summary(rp1)
@@ -149,7 +149,7 @@ head(indices)
 Or export them into a CVS file for further processing.
 
 ``` r
-# Or export them into a CVS file for further processing
+# Export indices into a CVS file
 rp.save2csv(rp1)
 
 # You may also plot a histogram of the 'suspicion' score to get an idea of what
@@ -163,13 +163,13 @@ Third, plot individual responses that warrant closer inspection.
 # Select the observation (see IMG 1)
 rp.plot(rp.selected, obs = 1)
 
-# Optionally, color the items based on their valence (or any other criterion)
-# and display pagination of the questionnaire (see IMG 2)
+# Optionally, color the items based, for instance, on their positive vs.
+# negative valence and display pagination of the questionnaire (see IMG 2)
 rp.plot(rp.selected, obs = 1, groups = list(c(1:10), c(11:20)), page.breaks = c(5,
     10, 15))
 
-# You may also export a collection of plot into a PDF file (utilizing the same
-# graphical arguments as the single rp.plot function)
+# You may also export a collection of all plots into a PDF file (utilizing the
+# same graphical arguments as the single rp.plot function)
 rp.plots2pdf(rp.selected, groups = list(c(1:10), c(11:20)), page.breaks = c(5, 10,
     15))
 ```
