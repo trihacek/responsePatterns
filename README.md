@@ -207,9 +207,9 @@ we may wish to analyze the data from all questionnaires simultaneously.
 We do not recommend entering all data in a single analysis, since
 different questionnaires may use different rating scales and
 participants may change their style of responding. Instead, we recommend
-analyzing each questionnaire separately and then collate the results.
-The make this example easy, let imagine that the data set consists of
-data collected via four 5-item questionnaires.
+analyzing each questionnaire separately and then collate the results. To
+make this example easy, let imagine that the **`rp.simdata`** data set
+consists of data collected via four 5-item questionnaires.
 
 ``` r
 # First, analyze each questionnaire separately
@@ -222,16 +222,16 @@ rp.d <- rp.acors(rp.simdata[, c(17:21)])
 percentiles <- as.data.frame(cbind(rp.simdata$optional_ID, rp.indices(rp.a)$percentile,
     rp.indices(rp.b)$percentile, rp.indices(rp.c)$percentile, rp.indices(rp.d)$percentile))
 
-# Choose a cutoff, let's say the 95th percentile, and count how many time the
-# person exceeded this cutoff (here, we chose the 80th percentile for
+# Choose a cutoff, let's say the 95th percentile, and count how many times each
+# person exceededs this cutoff (here, we chose the 80th percentile for
 # demonstration reasons, because the 95th percentile would not yield any
 # suspicious responses)
 percentile.cutoff <- 80
 percentiles$sum <- rowSums(percentiles > percentile.cutoff)
 
-# Decide on how many placings of the respondent above the percentile cutoff
-# score should be considered problematic. Then, select potentially problematic
-# responses
+# Decide on how many times a respondent muset be placed above the percentile
+# cutoff score should be considered problematic. Then, select potentially
+# problematic responses
 sum.cutoff <- 2
 IDs <- percentiles[percentiles$sum >= sum.cutoff, 1]
 
@@ -248,5 +248,5 @@ for (i in 1:length(IDs)) {
 dev.off()
 
 # Then, open the PDF file and explore the responses to decide if any of them
-# should be removed from the analysis.
+# should be removed from further analysis.
 ```
