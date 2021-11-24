@@ -162,6 +162,6 @@ for(i in 1:length(IDs)) {
 }
 dev.off()
 
-#Then, open the PDF file and explore the responses to decide if any of them should be removed from further analysis.
+#Then, open the PDF file and explore the responses to decide if any of them should be removed from further analysis. 
 
 ```
