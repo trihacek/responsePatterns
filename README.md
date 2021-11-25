@@ -208,7 +208,7 @@ We do not recommend entering all data in a single analysis, since
 different questionnaires may use different rating scales and
 participants may change their style of responding. Instead, we recommend
 analyzing each questionnaire separately and then collate the results. To
-make this example easy, let imagine that the **`rp.simdata`** data set
+make this example easy, let’s imagine that the **`rp.simdata`** data set
 consists of data collected via four 5-item questionnaires.
 
 ``` r
@@ -229,8 +229,8 @@ percentiles <- as.data.frame(cbind(rp.simdata$optional_ID, rp.indices(rp.a)$perc
 percentile.cutoff <- 80
 percentiles$sum <- rowSums(percentiles > percentile.cutoff)
 
-# Decide on how many times a respondent muset be placed above the percentile
-# cutoff score should be considered problematic. Then, select potentially
+# Decide on how many times a respondent must be placed above the percentile
+# cutoff score to be considered problematic. Then, select potentially
 # problematic responses
 sum.cutoff <- 2
 IDs <- percentiles[percentiles$sum >= sum.cutoff, 1]
