@@ -18,35 +18,28 @@ rp.hist <- function(rp.object){
   if(!methods::is(rp.object,"ResponsePatterns"))
     stop("The object is not of class ResponsePatterns")
 
-  density.col = 'blue'
-  density.adjust = 1
-
   if(rp.object@options$method=="acors") {
+    main.text <- "Histogram of auto-correlations"
 
     if(rp.object@options$percentile.method=="max") {
-      graphics::hist(rp.object@indices$max.abs.ac, xlim=c(0,1), breaks=10,
-                     xlab="Max. auto-correlation",
-                     main="Histogram of auto-correlations")
-      graphics::lines(stats::density(rp.object@indices$max.abs.ac, adjust=density.adjust),
-                      col=density.col)
+      what <- rp.object@indices$max.abs.ac
+      xlab.text <- "Max. auto-correlation"
     }
 
     if(rp.object@options$percentile.method=="sum") {
-      graphics::hist(rp.object@indices$sum.abs.ac,
-                     xlab="Sum of auto-correlations",
-                     main="Histogram of auto-correlations")
-      graphics::lines(stats::density(rp.object@indices$sum.abs.ac, adjust=density.adjust),
-                      col=density.col)
+      what <- rp.object@indices$sum.abs.ac
+      xlab.text <- "Sum of auto-correlations"
     }
 
   }
 
   if(rp.object@options$method=="patterns") {
-    graphics::hist(rp.object@indices$score, xlim=c(0,1), breaks=10,
-                   xlab="Pattern score",
-                   main="Histogram of pattern scores")
-    graphics::lines(stats::density(rp.object@indices$score, adjust=density.adjust),
-                    col=density.col)
+    main.text <- "Histogram of pattern scores"
+    what <- rp.object@indices$score
+    xlab.text <- "Pattern score"
   }
+
+  graphics::hist(what, xlab=xlab.text, main=main.text) #xlim=c(0,1), breaks=10,
+  #graphics::lines(stats::density(what, adjust=1), col="blue")
 
 }
