@@ -7,7 +7,7 @@
 <!-- badges: end -->
 
 Some survey participants tend to respond carelessly which complicates
-data analysis. This package provides functions that make it easier to
+data analysis. This R package provides functions that make it easier to
 explore responses and identify those that may be problematic. This
 package implements two approaches to the problem of careless responses
 detection:  
@@ -105,7 +105,7 @@ the potentially problematic patterns.
 
 ``` r
 library(responsePatterns)
-#> This is responsePatterns 0.1.0. Note: this is BETA software! Please mind that the package may not be stable and report any bugs! For questions and issues, please see github.com/trihacek/responsePatterns.
+#> This is responsePatterns 0.1.0.9000. Note: this is BETA software! Please mind that the package may not be stable and report any bugs! For questions and issues, please see github.com/trihacek/responsePatterns.
 # Use auto-correlation screening to find patterns in the data
 rp1 <- rp.acors(rp.simdata, max.lag = 5, id.var = "optional_ID")
 # Alternatively, use an iterative mechanistic method for pattern detection

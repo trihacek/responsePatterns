@@ -19,7 +19,7 @@ library(formatR)
 <!-- badges: start -->
 <!-- badges: end -->
 
-Some survey participants tend to respond carelessly which complicates data analysis. This package provides functions that make it easier to explore responses and identify those that may be problematic. This package implements two approaches to the problem of careless responses detection:  
+Some survey participants tend to respond carelessly which complicates data analysis. This R package provides functions that make it easier to explore responses and identify those that may be problematic. This package implements two approaches to the problem of careless responses detection:  
  - **`rp.acors`** is based on the auto-correlation approach that allows for a probabilistic detection of repetitive patterns a in survey data. This function calculates auto-correlation coefficients for all lags up to the value defined by the max.lag parameter for each observation (respondent). Subsequently, it assigns a percentile value to each observation (respondent) based either on the highest absolute auto-correlation or the sum of absolute auto-correlations.  
  - **`rp.patterns`** takes a more mechanistic approach. It searches for repetitive patterns in the data using an iterative algorithm. Patterns are defined based on the data: if a sequence of values occurs more than once within an observation, it is considered a repetition. The algorithm counts the number of repetitions for each pattern length and then weighs this sum by the length of the pattern (longer patterns are assigned higher weight). The total score for each respondent is determined as the sum of scores achieved for each pattern length and is standardized to a value between 0 and 1.
 

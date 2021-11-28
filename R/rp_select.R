@@ -36,8 +36,8 @@ rp.select <- function(rp.object,
   }
   rp.object@n.obs <- nrow(indices)
 
-  rp.object@id = rp.object@id[selected.rows]
-  rp.object@percentile = percentile
+  rp.object@id <- rp.object@id[selected.rows]
+  rp.object@percentile <- percentile
 
   return(rp.object)
 
