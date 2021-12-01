@@ -1,7 +1,7 @@
 citHeader("To cite responsePatterns in publications use:")
 
 citEntry(entry = "Manual",
-  title        = "responsePatterns: Screening of careless responding patterns",
+  title        = "responsePatterns: Screening for careless responding patterns",
   author       = personList(as.person("Rihacek Tomas"),
                    as.person("Gottfried Jaroslav")),
   year         = "2021",
