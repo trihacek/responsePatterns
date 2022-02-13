@@ -68,10 +68,11 @@ file.
 
 The rationale for response pattern analysis is described in:
 
-> Gottfried, J., Jezek, S., & Kralova, M. (2021). *Autocorrelation
-> screening: A potentially efficient method for detecting repetitive
-> response patterns in questionnaire data.* Manuscript submitted for
-> review.
+> Gottfried, J., Jezek, S., Kralova, M., & Rihacek, T. (2022).
+> Autocorrelation screening: A potentially efficient method for
+> detecting repetitive response patterns in questionnaire data.
+> *Practical Assessment, Research, and Evaluation, 27*, Article 2.
+> (<https://scholarworks.umass.edu/pare/vol27/iss1/2>)
 
 ## Installation
 
