@@ -72,7 +72,7 @@ The rationale for response pattern analysis is described in:
 > Autocorrelation screening: A potentially efficient method for
 > detecting repetitive response patterns in questionnaire data.
 > *Practical Assessment, Research, and Evaluation, 27*, Article 2.
-> (<https://scholarworks.umass.edu/pare/vol27/iss1/2>)
+> <https://scholarworks.umass.edu/pare/vol27/iss1/2>
 
 ## Installation
 
