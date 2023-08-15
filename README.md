@@ -72,7 +72,7 @@ The rationale for response pattern analysis is described in:
 > Autocorrelation screening: A potentially efficient method for
 > detecting repetitive response patterns in questionnaire data.
 > *Practical Assessment, Research, and Evaluation, 27*, Article 2.
-> <https://scholarworks.umass.edu/pare/vol27/iss1/2>
+> <https://doi.org/10.7275/vyxb-gt24>
 
 ## Installation
 
@@ -156,6 +156,7 @@ head(indices)
 Or export them into a CVS file for further processing.
 
 ``` r
+
 # Export indices into a CVS file
 rp.save2csv(rp1)
 

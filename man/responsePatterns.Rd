@@ -23,5 +23,5 @@ The package provides auxiliary functions to summarize the responsePatterns objec
 }
 
 \references{
-Gottfried, J., Jezek, S., & Kralova, M. (2021). \emph{Autocorrelation screening: A potentially efficient method for detecting repetitive response patterns in questionnaire data.} Manuscript submitted for review.
+Gottfried, J., Jezek, S., & Kralova, M. (2022). Autocorrelation screening: A potentially efficient method for detecting repetitive response patterns in questionnaire data. \emph{Practical Assessment, Research, and Evaluation, 27}, Article 2. https://doi.org/10.7275/vyxb-gt24
 }

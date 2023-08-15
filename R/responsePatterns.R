@@ -7,7 +7,7 @@
 #'The \code{\link{rp.patterns}} function searches for repetitive patterns in the data using an iterative algorithm. Patterns are defined based on the data themselves: if a sequence of values occurs more than once within an observation, it is considered a repetition. The algorithm counts the number of repetitions for different lengths of patterns and then weighs this sum by the length of the pattern (longer patterns are assigned higher weight). The total score for each respondent is determined as the sum of scores achieved for each pattern length and is standardized to a value between 0 and 1.
 #' @section Auxiliary functions:
 #' The package provides auxiliary functions to summarize the responsePatterns object (\code{\link{rp.summary}}), extract indices (\code{\link{rp.indices}}, \code{\link{rp.hist}}, \code{\link{rp.save2csv}}) and to visually inspect individual responses (\code{\link{rp.plot}}, \code{\link{rp.plots2pdf}}).
-#' @references Gottfried, J., Jezek, S., & Kralova, M. (2021). *Autocorrelation screening: A potentially efficient method for detecting repetitive response patterns in questionnaire data.* Manuscript submitted for review.
+#' @references Gottfried, J., Jezek, S., & Kralova, M. (2022). Autocorrelation screening: A potentially efficient method for detecting repetitive response patterns in questionnaire data. *Practical Assessment, Research, and Evaluation, 27*, Article 2. https://doi.org/10.7275/vyxb-gt24
 #'
 #' @docType package
 #' @name responsePatterns

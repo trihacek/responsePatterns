@@ -13,6 +13,7 @@ rp.plot(
   text.output = FALSE,
   groups = NULL,
   page.breaks = NULL,
+  plot.lags = 10,
   bw = FALSE
 )
 }
@@ -32,6 +33,8 @@ rp.plot(
 \item{groups}{A list of vectors. Defines groups of items that should be plotted using the same color.}
 
 \item{page.breaks}{A vector. Draws a vertical line after the specified items (useful if you want to display the pagination of the questionnaire in the plot).}
+
+\item{plot.lags}{How many lags should be displayed under the plot?}
 
 \item{bw}{A logical scalar. Should the plot be printed in black and white?}
 }

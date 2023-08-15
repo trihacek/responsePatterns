@@ -10,6 +10,7 @@
 #' @param text.output A logical scalar. Should the responses be printed to the console?
 #' @param groups A list of vectors. Defines groups of items that should be plotted using the same color.
 #' @param page.breaks A vector. Draws a vertical line after the specified items (useful if you want to display the pagination of the questionnaire in the plot).
+#' @param plot.lags How many lags should be displayed under the plot?
 #' @param bw A logical scalar. Should the plot be printed in black and white?
 #'
 #' @return Plots a graph.
@@ -30,6 +31,7 @@ rp.plot <- function(rp.object,
                     text.output=FALSE,
                     groups=NULL,
                     page.breaks=NULL,
+                    plot.lags = 10,
                     bw=FALSE
 ){
 
@@ -99,7 +101,11 @@ rp.plot <- function(rp.object,
   if(plot==TRUE) {
     sub <- ""
     if(rp.object@options$method=="acors") {
-      for(lag in rp.object@options$min.lag:rp.object@options$max.lag) {
+      #Trim lags if too many
+      if(rp.object@options$max.lag - rp.object@options$min.lag + 1 > plot.lags)
+        max.lag <- rp.object@options$min.lag + plot.lags - 1
+      
+      for(lag in rp.object@options$min.lag:max.lag) {
         r <- rp.object@coefficients[obs,paste0("lag",lag)]
         if(is.na(r))
           r <- "NA"
@@ -108,7 +114,7 @@ rp.plot <- function(rp.object,
           sign <- ifelse(r < 0,"-","")
           r <- ifelse(r==0,".0",substr(abs(r),start=2,stop=3))
         }
-        sub <- paste0(sub,"L",i,"=",r,", ")
+        sub <- paste0(sub,"L",lag,"=",r,", ")
       }
       sub <- substr(sub,start=1,stop=(nchar(sub)-2))
     }
@@ -116,7 +122,7 @@ rp.plot <- function(rp.object,
                main=paste0(deparse(substitute(rp.object)),", obs=", obs, ", rwnm=", rownames(rp.object@data[obs,]),", id=",rp.object@id[obs]),
                #main=paste0(deparse(substitute(rp.object)),", rwnm=", rownames(rp.object@data[obs,])),
                sub=sub,cex.sub=.80,
-               ylim=c(as.numeric(min(scale.levels)),as.numeric(max(scale.levels))),
+               ylim=c(min(as.numeric(scale.levels)),max(as.numeric(scale.levels))),
                xlab="Item", ylab="Response")
     if(bw==FALSE)
       graphics::lines(x=c(1:rp.object@n.vars), y=rp.object@data[obs,], type="p", pch=16,

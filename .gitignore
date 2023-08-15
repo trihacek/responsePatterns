@@ -5,3 +5,4 @@ _archive
 .httr-oauth
 .DS_Store
 responsePatterns.Rproj
+R/_playground.R

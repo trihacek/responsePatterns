@@ -5,3 +5,4 @@
 ^README\.Rmd$
 ^NEWS\.md$
 ^cran-comments\.md$
+^R/_playground.R
